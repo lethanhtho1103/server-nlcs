@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 // config data request
-app.use(express.urlencoded());
+
 app.use(express.json());
 
 app.use(
