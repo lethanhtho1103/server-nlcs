@@ -5,8 +5,9 @@ module.exports = {
     await queryInterface.createTable("Posts", {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       userId: {
         type: Sequelize.STRING,
@@ -18,7 +19,7 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       price: {
-        type: Sequelize.INT,
+        type: Sequelize.STRING,
       },
       image: {
         type: Sequelize.STRING,
