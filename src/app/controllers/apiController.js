@@ -26,9 +26,9 @@ class apiController {
 
   //[POST] /api/v1/post
   async handleUpPost(req, res, next) {
-    const { userId, name, description, price } = req.body;
+    const { userId, name, description } = req.body;
     const file = req.file ? req.file : req.body.image;
-    if (!userId || !name || !description || !price) {
+    if (!userId || !name || !description) {
       if (file) {
         cloudinary.uploader.destroy(file.filename);
       }
@@ -37,7 +37,7 @@ class apiController {
         errMessage: "Missing parameters!!",
       });
     }
-    const data = { userId, name, description, price, file };
+    const data = { userId, name, description, file };
     const response = await apiPostService.upPost(data);
     return res.status(200).json(response);
   }
@@ -60,10 +60,10 @@ class apiController {
 
   //[PATCH] /api/v1/post/:id
   async handleUpdatePost(req, res, next) {
-    const { userId, name, description, price } = req.body;
+    const { userId, name, description } = req.body;
     const file = req.file ? req.file : req.body.image;
 
-    if (!userId || !name || !description || !price) {
+    if (!userId || !name || !description) {
       if (file) {
         cloudinary.uploader.destroy(file.filename);
       }
@@ -72,7 +72,7 @@ class apiController {
         errMessage: "Missing parameters!!",
       });
     }
-    const data = { userId, name, description, price, file };
+    const data = { userId, name, description, file };
     const id = req.params.id;
     const response = await apiPostService.updatePost({
       id: id,

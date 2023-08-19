@@ -66,7 +66,6 @@ const upPost = (data) => {
         userId: data.userId,
         name: data.name,
         description: data.description,
-        price: data.price,
         image: image ? image : "",
       });
 
@@ -152,7 +151,7 @@ const getPostById = ({ id }) => {
 
       return resolve({
         errCode: 1,
-        errMessage: `Không tìm thấy ${id}`,
+        errMessage: `Không tìm thấy id (${id}) trong hệ thống`,
       });
     } catch (error) {
       reject(error);
@@ -160,7 +159,7 @@ const getPostById = ({ id }) => {
   });
 };
 
-const updatePost = async ({ id, userId, name, description, price, file }) => {
+const updatePost = async ({ id, userId, name, description, file }) => {
   return new Promise(async (resolve, reject) => {
     const isHaveUser = await checkUserData(userId);
     let image;
@@ -187,7 +186,7 @@ const updatePost = async ({ id, userId, name, description, price, file }) => {
       }
 
       let imgLink = post.dataValues.image;
-      await post.update({ name, description, price, image: image });
+      await post.update({ name, description, image: image });
       resolve({
         errCode: 0,
         errMesagge: "Ok!",
