@@ -17,6 +17,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      ticket: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1,
+      },
       status: {
         type: Sequelize.STRING,
         defaultValue: "0",

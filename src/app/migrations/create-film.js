@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("VolunteerWorks", {
+    await queryInterface.createTable("Films", {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -21,15 +21,15 @@ module.exports = {
           },
         },
       },
-      maxStudent: {
+      maxUser: {
         type: Sequelize.INTEGER,
       },
-      curStudent: {
+      curUser: {
         type: Sequelize.INTEGER,
         defaultValue: 0,
         validate: {
-          checkCurStudent(value) {
-            if (value > this.maxStudent) {
+          checkCurUser(value) {
+            if (value > this.maxUser) {
               throw new Error("Số lượng hiện tại đã đạt tối đa!");
             }
           },
@@ -39,6 +39,9 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       room: {
+        type: Sequelize.STRING,
+      },
+      videoReview: {
         type: Sequelize.STRING,
       },
       note: {
@@ -55,6 +58,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("VolunteerWorks");
+    await queryInterface.dropTable("Films");
   },
 };

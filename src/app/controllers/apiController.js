@@ -1,5 +1,6 @@
 const apiUserService = require("../../services/apiUserService");
 const apiPostService = require("../../services/apiPostService");
+const apiFilmService = require("../../services/apiFilmService");
 const cloudinary = require("cloudinary").v2;
 
 class apiController {
@@ -79,6 +80,83 @@ class apiController {
       ...data,
     });
     res.status(200).json(response);
+  }
+
+  //[POST] /api/v1/film/create
+  async handleCreateFilm(req, res, next) {
+    const { name, startDate, room, maxUser, price, note, videoReview } =
+      req.body;
+
+    if (!name || !startDate || !room || !maxUser || !price) {
+      return res.status(200).json({
+        errCode: 1,
+        errMessage: "Missing input",
+      });
+    }
+
+    const response = await apiFilmService.createFilm({
+      name,
+      videoReview,
+      startDate,
+      room,
+      maxUser,
+      price,
+      note,
+    });
+    return res.status(200).json(response);
+  }
+
+  //[GET] /api/v1/film/get-one
+  async handleGetOneFilm(req, res) {
+    if (!req.query.filmId) {
+      return res.status(200).json({
+        errCode: 4,
+        errMessage: "Thiếu tham số filmId",
+      });
+    }
+
+    const response = await apiFilmService.getFilm({ filmId: req.query.filmId });
+    return res.status(200).json(response);
+  }
+
+  //[POST] /api/v1/film/register
+  async handleRegisterFilm(req, res) {
+    const { filmId, userId, ticket } = req.body;
+    if (!filmId || !userId) {
+      return res.status(404).json({
+        errCode: 4,
+        errMessage: "Thiếu tham số hay truyền chưa đúng!",
+      });
+    }
+    const response = await apiFilmService.registerFilm(filmId, userId, ticket);
+    res.status(200).json(response);
+  }
+
+  //[DELETE] /api/v1/listuser/delete
+  async handleDeleteListUser(req, res) {
+    const id = req.body.id;
+    const isAdmin = req.body.isAdmin;
+    const userId = req.body.userId;
+    if (!userId && !isAdmin) {
+      res.status(404).json({
+        errCode: 4,
+        errMessage: "Thiếu tham số",
+      });
+    }
+    const response = await apiFilmService.deleteUserOfListUser({
+      id,
+      userId,
+      isAdmin,
+    });
+    res.status(200).send(response);
+  }
+
+  //[GET] /api/v1/film-user-register
+  async handleGetFilmUserRegister(req, res) {
+    const response = await apiFilmService.getFilmOfUserRegistered({
+      userId: req.query.userId,
+    });
+    res.status(200).send(response);
   }
 }
 

@@ -178,30 +178,30 @@ const updatePost = async ({ id, userId, name, description, file }) => {
       const post = await db.Post.findByPk(id);
 
       if (!post) {
-        uploadClound.storage.cloudinary.uploader.destroy(file.filename);
+        // uploadClound.storage.cloudinary.uploader.destroy(file.filename);
         return resolve({
           errCode: 1,
           errMesagge: `Không tìm thấy bài đăng có id = ${id}`,
         });
       }
 
-      let imgLink = post.dataValues.image;
+      // let imgLink = post.dataValues.image;
       await post.update({ name, description, image: image });
       resolve({
         errCode: 0,
         errMesagge: "Ok!",
       });
-      const strArr = imgLink.split("/");
-      const strSplipDot = strArr[strArr.length - 1].split(".");
-      const nameImg = "nienluan_image-post/" + strSplipDot[0];
+      // const strArr = imgLink.split("/");
+      // const strSplipDot = strArr[strArr.length - 1].split(".");
+      // const nameImg = "nienluan_image-post/" + strSplipDot[0];
 
-      return uploadClound.storage.cloudinary.uploader.destroy(
-        nameImg,
-        (err, result) => {
-          console.log(result);
-          console.log(err);
-        }
-      );
+      // return uploadClound.storage.cloudinary.uploader.destroy(
+      //   nameImg,
+      //   (err, result) => {
+      //     console.log(result);
+      //     console.log(err);
+      //   }
+      // );
     } catch (error) {
       reject(error);
     }
