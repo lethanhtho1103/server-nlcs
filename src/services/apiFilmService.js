@@ -1,6 +1,265 @@
 const { v4: uuidv4 } = require("uuid");
 const db = require("../app/models/");
+const Sequelize = require("sequelize");
 const { Op } = require("sequelize");
+
+const getFilmReg = ({
+  isChecked,
+  id,
+  userId,
+  limit,
+  typeTimeFilm = "Doing",
+}) => {
+  const conditions = {
+    where: {
+      status: isChecked ? 1 : 0,
+    },
+  };
+  if (userId) {
+    conditions.where.userId = userId;
+    if (limit) {
+      conditions.limit = limit;
+    }
+  }
+  const conditionFilm = {};
+  if (id) {
+    conditionFilm.where = {
+      id,
+    };
+  }
+  if (typeTimeFilm === "Doing") {
+    // // if (conditionFilm?.where) {
+    // //   conditionFilm.where.startDate = { [Op.gte]: new Date() };
+    // // }
+    // //  else {
+    // conditionFilm.where = {
+    //   startDate: { [Op.gte]: new Date() },
+    // };
+    // // }
+  }
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await db.ListUser.findAll({
+        ...conditions,
+        raw: true,
+        nest: true,
+        attributes: {
+          exclude: ["userId", "filmId"],
+        },
+        separate: true,
+        include: [
+          {
+            model: db.User,
+            as: "userFilm",
+            attributes: {
+              exclude: ["password", "createdAt", "updatedAt"],
+            },
+          },
+          {
+            model: db.Film,
+            as: "film",
+            ...conditionFilm,
+          },
+        ],
+        order: [
+          [
+            {
+              model: db.film,
+            },
+            "startDate",
+            "ASC",
+          ],
+        ],
+      });
+      if (data.length > 0) {
+        resolve({
+          errCode: 0,
+          errMessage: "",
+          data: data,
+        });
+        resolve({
+          errCode: 1,
+          errMessage: "Không có bản ghi nào phù hợp!",
+          data: [],
+        });
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const getFilm = ({ filmId }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!filmId) {
+        resolve({
+          errCode: 1,
+          errMessage: `film trống!`,
+        });
+      }
+
+      const data = await db.Film.findOne({
+        where: {
+          id: filmId,
+        },
+        raw: true,
+      });
+
+      if (!data) {
+        resolve({
+          errCode: 2,
+          errMessage: `Không tìm thấy bộ phim có id = ${filmId} `,
+        });
+      }
+
+      resolve({
+        errCode: 0,
+        errMessage: "Ok",
+        data: data,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const getFilmAndCountRequest = ({ filmId }) => {
+  const conditions = {
+    where: {
+      status: 0,
+    },
+  };
+
+  const conditionFilm = {};
+  if (filmId) {
+    conditionFilm.where = {
+      id: filmId,
+    };
+  }
+
+  if (conditionFilm?.where) {
+    conditionFilm.where.startDate = { [Op.gte]: new Date() };
+  } else {
+    conditionFilm.where = {
+      startDate: { [Op.gte]: new Date() },
+    };
+  }
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await db.ListUser.findAll({
+        ...conditions,
+        raw: true,
+        nest: true,
+        attributes: {
+          include: [
+            [Sequelize.fn("COUNT", Sequelize.col("userFilm.id")), "filmCount"],
+          ],
+          exclude: ["userId", "filmId"],
+        },
+        group: ["film.id"],
+        // separate: true,
+        include: [
+          {
+            model: db.User,
+            as: "userFilm",
+            attributes: {
+              exclude: ["password", "createdAt", "updatedAt"],
+            },
+          },
+          {
+            model: db.Film,
+            as: "film",
+            ...conditionFilm,
+          },
+        ],
+        order: [
+          [
+            {
+              model: db.film,
+            },
+            "startDate",
+            "ASC",
+          ],
+        ],
+      });
+
+      if (data) {
+        resolve({
+          errCode: 0,
+          errMessage: "",
+          films: data,
+        });
+      }
+
+      resolve({
+        errCode: 1,
+        errMessage: "Lỗi apiService tại backend",
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const filmBrowse = (id, req) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const film = await db.ListUser.findOne({
+        where: {
+          id,
+        },
+      });
+      if (!film) {
+        resolve({
+          errCode: 2,
+          errMessage: "Không có bộ phim này!",
+        });
+      }
+
+      await film.set({
+        status: req,
+      });
+
+      const res = await film.save();
+      if (res) {
+        const result = await db.Film.findOne({
+          where: {
+            id: film.dataValues.filmId,
+          },
+        });
+        if (!result) {
+          resolve({
+            errCode: 3,
+            errMessage: "Không có bộ phim này trong bảng Film",
+          });
+        }
+
+        const resultFilm = await result.increment("curUser", {
+          by: 1,
+        });
+        if (resultFilm) {
+          resolve({
+            errCode: 0,
+            errMessage: "",
+          });
+        } else {
+          resolve({
+            errCode: 5,
+            errMessage: "Lỗi Film",
+          });
+        }
+      }
+      resolve({
+        errCode: 4,
+        errMessage: "Lỗi server 500",
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 
 const createFilm = (data) => {
   return new Promise(async (resolve, reject) => {
@@ -122,41 +381,6 @@ const registerFilm = (filmId, userId, ticket) => {
   });
 };
 
-const getFilm = ({ filmId }) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      if (!filmId) {
-        resolve({
-          errCode: 1,
-          errMessage: `film trống!`,
-        });
-      }
-
-      const data = await db.Film.findOne({
-        where: {
-          id: filmId,
-        },
-        raw: true,
-      });
-
-      if (!data) {
-        resolve({
-          errCode: 2,
-          errMessage: `Không tìm thấy bộ phim có id = ${filmId} `,
-        });
-      }
-
-      resolve({
-        errCode: 0,
-        errMessage: "Ok",
-        data: data,
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
-
 const deleteUserOfListUser = ({ id, userId, isAdmin }) => {
   if (!id) {
     return {
@@ -272,10 +496,83 @@ const getFilmOfUserRegistered = ({ userId }) => {
   });
 };
 
+const getDataStatisticalParReq = ({ year = new Date().getFullYear() - 1 }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const listFilmPar = await db.ListUser.findAll({
+        where: {
+          status: 1,
+        },
+        raw: true,
+        nest: true,
+        attributes: [
+          [Sequelize.fn("MONTH", Sequelize.col("startDate")), "month"],
+          [Sequelize.fn("COUNT", "*"), "count"],
+        ],
+        include: [
+          {
+            model: db.Film,
+            as: "film",
+            where: {
+              startDate: Sequelize.literal(`YEAR(startDate) = ${year}`),
+            },
+          },
+        ],
+        group: [Sequelize.fn("MONTH", Sequelize.col("startDate"))],
+      });
+      let dataPar = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      listFilmPar.forEach((month) => {
+        dataPar[month - month - 1] = month.count;
+      });
+
+      const listFilmReq = await db.ListUser.findAll({
+        raw: true,
+        nest: true,
+        attributes: [
+          [Sequelize.fn("MONTH", Sequelize.col("startDate")), "month"],
+          [Sequelize.fn("COUNT", "*"), "count"],
+        ],
+        where: {
+          status: 0,
+        },
+        include: [
+          {
+            model: db.Film,
+            as: "film",
+            where: {
+              startDate: Sequelize.literal(`YEAR(startDate) = ${year}`),
+            },
+          },
+        ],
+        group: [Sequelize.fn("MONTH", Sequelize.col("startDate"))],
+      });
+      let dataReq = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      listFilmReq.forEach((month) => {
+        dataReq[month.month - 1] = month.count;
+      });
+
+      return resolve({
+        errCode: 0,
+        errMessage: "Success!",
+        data: {
+          Par: dataPar,
+          Req: dataReq,
+        },
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getFilm,
+  getFilmReg,
+  getFilmAndCountRequest,
+  filmBrowse,
   createFilm,
   registerFilm,
   deleteUserOfListUser,
   getFilmOfUserRegistered,
+  getDataStatisticalParReq,
 };

@@ -82,6 +82,8 @@ class apiController {
     res.status(200).json(response);
   }
 
+  // ***************************************
+
   //[POST] /api/v1/film/create
   async handleCreateFilm(req, res, next) {
     const { name, startDate, room, maxUser, price, note, videoReview } =
@@ -117,6 +119,19 @@ class apiController {
 
     const response = await apiFilmService.getFilm({ filmId: req.query.filmId });
     return res.status(200).json(response);
+  }
+
+  // [PATCH] /api/v1/film-browse
+  async handleBrower(req, res) {
+    const idFilm = req.body.id;
+    if (!idFilm) {
+      res.status(200).json({
+        errCode: 1,
+        errMessage: "Không có id!",
+      });
+    }
+    const response = await apiFilmService.filmBrowse(idFilm, 1);
+    res.status(200).json(response);
   }
 
   //[POST] /api/v1/film/register
@@ -157,6 +172,38 @@ class apiController {
       userId: req.query.userId,
     });
     res.status(200).send(response);
+  }
+
+  // [GET] /api/v1/film-user
+  // Có vấn đề chưa fix xong
+  async handleGetFilmUser(req, res) {
+    const userId = req.query.userId;
+    const isChecked = req.query.isChecked;
+    if (!userId) {
+      res.status(200).json({
+        errCode: 3,
+        errMessage: "User trống!",
+      });
+    }
+    const data = await apiFilmService.getFilmReg({
+      isChecked: 1,
+      userId,
+      isChecked,
+    });
+    res.status(200).json(data);
+  }
+
+  //[GET] /api/v1/film/get-and-count-resquest
+  async handleGetFilmAndCountRequest(req, res) {
+    const data = await apiFilmService.getFilmAndCountRequest({});
+    res.status(200).json(data);
+  }
+
+  // [GET] /api/v1/statistical/user-par-req
+  async handleStatisticalParReq(req, res) {
+    const year = req.query.year;
+    const response = await apiFilmService.getDataStatisticalParReq({ year });
+    res.status(200).json(response);
   }
 }
 

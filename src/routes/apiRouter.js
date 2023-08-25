@@ -18,5 +18,15 @@ router.get(
   "/v1/listuser/film-user-register",
   apiController.handleGetFilmUserRegister
 );
+router.get(
+  "/v1/film/get-and-count-resquest",
+  apiController.handleGetFilmAndCountRequest
+);
+router.get("/v1/film-user", apiController.handleGetFilmUser);
+router.patch("/v1/film-browse", apiController.handleBrower);
+router.get(
+  "/v1/statistical/user-par-req",
+  apiController.handleStatisticalParReq
+);
 
 module.exports = router;
