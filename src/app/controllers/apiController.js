@@ -13,8 +13,13 @@ class apiController {
 
   // [POST] /api/v1/register
   async handleRegister(req, res, next) {
-    const { id, password } = req.body;
-    const data = await apiUserService.authRegister(id, password);
+    const { name, id, password, confPass } = req.body;
+    const data = await apiUserService.authRegister(
+      name,
+      id,
+      password,
+      confPass
+    );
     res.status(200).json(data);
   }
 

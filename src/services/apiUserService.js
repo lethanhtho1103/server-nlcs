@@ -41,40 +41,68 @@ const authLogin = (id, password) => {
   });
 };
 
-const authRegister = (id, password) => {
+const authRegister = (name, id, password, confPass) => {
   return new Promise(async (resolve, reject) => {
     try {
-      if (!id) {
+      if (name === "") {
         resolve({
           errCode: 1,
-          errMessage: "Id trống!",
+          errMessage: "Họ và tên trống!",
         });
-      } else if (!password) {
+      } else if (id === "") {
         resolve({
           errCode: 1,
-          errMessage: "Password trống!",
+          errMessage: "Tên đăng nhập rỗng!",
         });
-      }
-
-      const alreadyRegister = await db.User.findOne({
-        where: {
-          id,
-        },
-      });
-
-      if (alreadyRegister) {
+      } else if (id.length <= 6) {
         resolve({
           errCode: 1,
-          errMessage: "Tài khoản đã tồn tài trước đó",
+          errMessage: "Tên đăng nhập phải lớn hơn 6 kí tự!",
         });
-      }
-
-      const newUser = new db.User({ id, password });
-      const saveUser = await newUser.save();
-      if (saveUser) {
+      } else if (password === "") {
         resolve({
-          Message: "Đăng ký tài khoản thành công",
+          errCode: 1,
+          errMessage: "Mật khẩu trống!",
         });
+      } else if (password.length <= 8) {
+        resolve({
+          errCode: 1,
+          errMessage: "Mật khẩu phải lớn hơn 8 kí tự!",
+        });
+      } else if (confPass === "") {
+        resolve({
+          errCode: 1,
+          errMessage: "Nhập lại mật khẩu trống!",
+        });
+      } else {
+        const alreadyRegister = await db.User.findOne({
+          where: {
+            id,
+          },
+        });
+
+        if (alreadyRegister) {
+          resolve({
+            errCode: 1,
+            errMessage: "Tài khoản đã tồn tài trước đó",
+          });
+        }
+
+        if (password === confPass) {
+          const newUser = new db.User({ name, id, password });
+          const saveUser = await newUser.save();
+          if (saveUser) {
+            resolve({
+              errCode: 0,
+              errMessage: "",
+            });
+          }
+        } else {
+          resolve({
+            errCode: 1,
+            errMessage: "Nhập lại mật khẩu không đúng. Vui lòng nhập lại!",
+          });
+        }
       }
     } catch (error) {
       reject(error);
