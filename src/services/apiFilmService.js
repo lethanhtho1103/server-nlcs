@@ -124,6 +124,31 @@ const getFilm = ({ filmId }) => {
   });
 };
 
+const getAllFilm = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await db.Film.findAll({
+        raw: true,
+      });
+
+      if (!data) {
+        resolve({
+          errCode: 2,
+          errMessage: `Không tìm thấy kết quả `,
+        });
+      }
+
+      resolve({
+        errCode: 0,
+        errMessage: "Ok",
+        data: data,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 const getFilmAndCountRequest = ({ filmId }) => {
   const conditions = {
     where: {
@@ -274,12 +299,16 @@ const createFilm = (data) => {
       const film = await db.Film.create({
         id: uuidv4(),
         name: data.name,
-        videoReview: data.videoReview ? data.videoReview : null,
-        room: data.room,
+        image: data.image ? data.image : null,
+        backgroundImage: data.backgroundImage ? data.backgroundImage : null,
+        type: data.type,
+        origin: data.origin,
         startDate: data.startDate,
-        maxUser: data.maxUser,
-        price: data.price,
-        note: data.note ? data.note : null,
+        totalTime: data.totalTime,
+        ageAllowed: data.ageAllowed,
+        content: data.content ? data.content : null,
+        title: data.title,
+        evaluate: data.evaluate,
       });
 
       if (film) {
@@ -567,6 +596,7 @@ const getDataStatisticalParReq = ({ year = new Date().getFullYear() - 1 }) => {
 
 module.exports = {
   getFilm,
+  getAllFilm,
   getFilmReg,
   getFilmAndCountRequest,
   filmBrowse,

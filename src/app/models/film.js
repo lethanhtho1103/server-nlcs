@@ -13,18 +13,25 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "filmId",
         as: "film",
       });
+      Film.hasMany(models.ShowTimes, {
+        foreignKey: "filmId",
+        as: "filmShowTimes",
+      });
     }
   }
   Film.init(
     {
       name: DataTypes.STRING,
-      videoReview: DataTypes.STRING,
+      image: DataTypes.STRING,
+      backgroundImage: DataTypes.STRING,
+      type: DataTypes.STRING,
+      origin: DataTypes.STRING,
+      title: DataTypes.STRING,
       startDate: DataTypes.DATE,
-      room: DataTypes.STRING,
-      maxUser: DataTypes.INTEGER,
-      curUser: DataTypes.INTEGER,
-      price: DataTypes.INTEGER,
-      note: DataTypes.TEXT,
+      totalTime: DataTypes.INTEGER,
+      ageAllowed: DataTypes.INTEGER,
+      evaluate: DataTypes.INTEGER,
+      content: DataTypes.TEXT,
     },
     {
       sequelize,

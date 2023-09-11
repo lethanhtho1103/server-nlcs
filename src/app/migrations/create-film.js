@@ -21,30 +21,45 @@ module.exports = {
           },
         },
       },
-      maxUser: {
-        type: Sequelize.INTEGER,
-      },
-      curUser: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-        validate: {
-          checkCurUser(value) {
-            if (value > this.maxUser) {
-              throw new Error("Số lượng hiện tại đã đạt tối đa!");
-            }
-          },
-        },
-      },
-      price: {
-        type: Sequelize.INTEGER,
-      },
-      room: {
+      // maxUser: {
+      //   type: Sequelize.INTEGER,
+      // },
+      // curUser: {
+      //   type: Sequelize.INTEGER,
+      //   defaultValue: 0,
+      //   validate: {
+      //     checkCurUser(value) {
+      //       if (value > this.maxUser) {
+      //         throw new Error("Số lượng hiện tại đã đạt tối đa!");
+      //       }
+      //     },
+      //   },
+      // },
+      image: {
         type: Sequelize.STRING,
       },
-      videoReview: {
+      backgroundImage: {
         type: Sequelize.STRING,
       },
-      note: {
+      type: {
+        type: Sequelize.STRING,
+      },
+      origin: {
+        type: Sequelize.STRING,
+      },
+      title: {
+        type: Sequelize.STRING,
+      },
+      totalTime: {
+        type: Sequelize.INTEGER,
+      },
+      ageAllowed: {
+        type: Sequelize.INTEGER,
+      },
+      evaluate: {
+        type: Sequelize.INTEGER,
+      },
+      content: {
         type: Sequelize.TEXT,
       },
       createdAt: {

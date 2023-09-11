@@ -91,10 +91,33 @@ class apiController {
 
   //[POST] /api/v1/film/create
   async handleCreateFilm(req, res, next) {
-    const { name, startDate, room, maxUser, price, note, videoReview } =
-      req.body;
+    const {
+      name,
+      type,
+      image,
+      backgroundImage,
+      origin,
+      startDate,
+      totalTime,
+      ageAllowed,
+      content,
+      title,
+      evaluate,
+    } = req.body;
 
-    if (!name || !startDate || !room || !maxUser || !price) {
+    if (
+      !name ||
+      !type ||
+      !image ||
+      !backgroundImage ||
+      !origin ||
+      !startDate ||
+      !totalTime ||
+      !ageAllowed ||
+      !content ||
+      !title ||
+      !evaluate
+    ) {
       return res.status(200).json({
         errCode: 1,
         errMessage: "Missing input",
@@ -103,12 +126,16 @@ class apiController {
 
     const response = await apiFilmService.createFilm({
       name,
-      videoReview,
+      type,
+      image,
+      backgroundImage,
+      origin,
       startDate,
-      room,
-      maxUser,
-      price,
-      note,
+      totalTime,
+      ageAllowed,
+      content,
+      title,
+      evaluate,
     });
     return res.status(200).json(response);
   }
@@ -123,6 +150,12 @@ class apiController {
     }
 
     const response = await apiFilmService.getFilm({ filmId: req.query.filmId });
+    return res.status(200).json(response);
+  }
+
+  //[GET] /api/v1/film/get-all
+  async handleGetAllFilm(req, res) {
+    const response = await apiFilmService.getAllFilm();
     return res.status(200).json(response);
   }
 

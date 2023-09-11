@@ -1,0 +1,20 @@
+{
+    "name" : "Địa Đàng Sụp Đổ",
+      "type" : "Viễn tưởng, Chính kịch",
+      "image" : "https://cinema.momocdn.net/img/17498461059164213-poster.jpg",
+      "backgroundImage" : "https://cinema.momocdn.net/img/17498479334159640-g8kCHQzfogy1t1dE9nPBtiFkz64.jpg",
+      "origin" : "Hàn Quốc",
+      "startDate" : "10-09-2023",
+      "totalTime" : 130,
+      "ageAllowed" : 16,
+      "content" : "Được nhận xét là một “chuẩn mực mới về phản địa đàng trong dòng phim thảm họa Hàn Quốc”, bom tấn ĐỊA ĐÀNG SỤP ĐỔ xoay quanh cơn đại địa chấn san bằng Seoul thành bình địa và hành trình sinh tồn của những người sống sót.",
+      "title" : "Chúng ta tin là những người được chọn",
+      "evaluate" : 7.7
+},
+INSERT INTO `films`(`name`, `startDate`, `image`, `backgroundImage`, `type`, `origin`, `title`, `totalTime`, `ageAllowed`, `evaluate`, `content`) VALUES ('Người Vợ Cuối Cùng','10-11-2023','https://cinema.momocdn.net/img/15087893214581577-dRgYeBp48TwCU84d6BR7A3VwfUi.jpg','https://cinema.momocdn.net/img/15087893694815253-55jXWq2Z3g1L0fTRHLJ36UPspmm.jpg','Chính kịch, Lãng mạn','Việt Nam','Một bộ phim đến từ đạo diễn Victor Vũ!',120,16,8.3,'Lấy cảm hứng từ tiểu thuyết Hồ Oán Hận, của nhà văn Hồng Thái, Người Vợ Cuối Cùng là một bộ phim tâm lý cổ trang, lấy bối cảnh Việt Nam vào triều Nguyễn. LINH - Người vợ bất đắc dĩ của một viên quan tri huyện, xuất thân là con của một gia đình nông dân nghèo khó, vì không thể hoàn thành nghĩa vụ sinh con nối dõi nên đã chịu sự chèn ép của những người vợ lớn trong gia đình. Sự gặp gỡ tình cờ của cô và người yêu thời thanh mai trúc mã của mình - NHÂN đã dẫn đến nhiều câu chuyện bất ngờ xảy ra khiến cuộc sống cô hoàn toàn thay đổi.')
+
+INSERT INTO `films`(`name`, `startDate`, `image`, `backgroundImage`, `type`, `origin`, `title`, `totalTime`, `ageAllowed`, `evaluate`, `content`) VALUES ('Bộ Đôi Báo Thủ','12-11-2023','https://cinema.momocdn.net/img/18544324979906627-poster.jpg','https://cinema.momocdn.net/img/18544496578355043-ewlNu82GwEI0PKeEEGL0dU5dMb3.jpg','Chính kịch, Gay cấn','Hàn Quốc','Hai người đàn ông, một túi tiền và không có bất kỳ sự hỗ trợ nào!',125,18,8.3,'Sau 5 năm chôn chân tại Vụ Trung Đông, Bộ Ngoại giao, bỗng một ngày nhà ngoại giao Min-jun (Ha Jung-woo) bất ngờ nhận được tin nhắn mã hoá từ một đồng nghiệp mất tích ở Lebanon 20 tháng trước. Khao khát được thăng chức tới Mỹ nếu hoàn thành nhiệm vụ không chính thức, Min-jun lên đường tới Lebanon, đem theo số tiền chuộc lớn để giải cứu đồng nghiệp. Nguy hiểm liên tiếp ập đến ngay từ khi Min-jun đặt chân xuống sân bay Lebanon khiến anh bất đắc dĩ phải dựa vào sự giúp đỡ của người Hàn Quốc duy nhất tại đây - tài xế taxi Pan-su (Ju Ji-hoon). Bị cảnh sát địa phương truy đuổi, còn bọn xã hội đen ráo riết cướp tiền chuộc, cộng thêm “đồng đội” bất ổn và tham tiền Pan-su, hành trình của nhà ngoại giao Min-ju liệu có thể đến đích?')
+
+INSERT INTO `films`(`name`, `startDate`, `image`, `backgroundImage`, `type`, `origin`, `title`, `totalTime`, `ageAllowed`, `evaluate`, `content`) VALUES ('Thiện Ác Đối Đầu 3','15-11-2023','	https://cinema.momocdn.net/img/12744073754606903-3o3GE709vaU2O1A3g62ZAewQiVP.jpg','	https://cinema.momocdn.net/img/12744064230015377-the_equalizer_2_EZYV.jpg','Gay cấn, Hành động, Hình sự','Mỹ','Công lý thì không có ranh giới.',115,18,9.1,'Robert McCall chuyển đến sinh sống tại miền Nam nước Ý nhưng phát hiện ra bạn bè của mình bị một tổ chức mafia ở địa phương kiểm soát. Khi tính mạng của họ bị đe dọa, ông buộc phải quay trở lại con đường sát thủ để bảo vệ bạn bè.')
+
+INSERT INTO `films`(`name`, `startDate`, `image`, `backgroundImage`, `type`, `origin`, `title`, `totalTime`, `ageAllowed`, `evaluate`, `content`) VALUES ('Oppenheimer','22-11-2023','Oppenheimer','https://cinema.momocdn.net/img/91346314910670697-ycnO0cjsAROSGJKuMODgRtWsHQw.jpg','Chiến tranh, Chính kịch, Lịch sử','Mỹ', 'Thế giới mãi mãi thay đổi.', 110, 18, 8.5, 'Câu chuyện về J. Robert Oppenheimer, người giữ vị trí quan trọng trong việc chế tạo bom nguyên tử vào Thế Chiến II.');
