@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Room.hasMany(models.ShowTimes, {
+      Room.hasMany(models.ShowTime, {
         foreignKey: "roomId",
-        as: "roomShowTimes",
+        as: "roomShowTime",
       });
     }
   }

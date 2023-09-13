@@ -153,9 +153,15 @@ class apiController {
     return res.status(200).json(response);
   }
 
-  //[GET] /api/v1/film/get-all
-  async handleGetAllFilm(req, res) {
-    const response = await apiFilmService.getAllFilm();
+  //[GET] /api/v1/film/get-all-playing
+  async handleGetAllFilmPlaying(req, res) {
+    const response = await apiFilmService.getAllFilmPlaying();
+    return res.status(200).json(response);
+  }
+
+  //[GET] /api/v1/film/get-all-upcoming
+  async handleGetAllFilmUpComing(req, res) {
+    const response = await apiFilmService.getAllFilmUpComing();
     return res.status(200).json(response);
   }
 

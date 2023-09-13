@@ -11,7 +11,8 @@ router.get("/v1/post/:id", apiController.handelGetPostById);
 router.patch("/v1/post/:id", apiController.handleUpdatePost);
 
 router.get("/v1/film/get-one", apiController.handleGetOneFilm);
-router.get("/v1/film/get-all", apiController.handleGetAllFilm);
+router.get("/v1/film/get-all-playing", apiController.handleGetAllFilmPlaying);
+router.get("/v1/film/get-all-upcoming", apiController.handleGetAllFilmUpComing);
 
 router.post("/v1/film/create", apiController.handleCreateFilm);
 router.post("/v1/film/register", apiController.handleRegisterFilm);

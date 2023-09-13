@@ -13,14 +13,17 @@ module.exports = {
       },
       startDate: {
         type: Sequelize.DATE,
-        validate: {
-          checkStartDate(value) {
-            if (value <= new Date()) {
-              throw new Error("Ngày bắt đầu phải là ngày trong tương lai!");
-            }
-          },
-        },
       },
+      // startDate: {
+      //   type: Sequelize.DATE,
+      //   validate: {
+      //     checkStartDate(value) {
+      //       if (value <= new Date()) {
+      //         throw new Error("Ngày bắt đầu phải là ngày trong tương lai!");
+      //       }
+      //     },
+      //   },
+      // },
       // maxUser: {
       //   type: Sequelize.INTEGER,
       // },
@@ -57,7 +60,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       evaluate: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       content: {
         type: Sequelize.TEXT,

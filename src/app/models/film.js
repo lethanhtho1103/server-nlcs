@@ -13,9 +13,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "filmId",
         as: "film",
       });
-      Film.hasMany(models.ShowTimes, {
+      Film.hasMany(models.ShowTime, {
         foreignKey: "filmId",
-        as: "filmShowTimes",
+        as: "filmShowTime",
       });
     }
   }
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       startDate: DataTypes.DATE,
       totalTime: DataTypes.INTEGER,
       ageAllowed: DataTypes.INTEGER,
-      evaluate: DataTypes.INTEGER,
+      evaluate: DataTypes.FLOAT,
       content: DataTypes.TEXT,
     },
     {

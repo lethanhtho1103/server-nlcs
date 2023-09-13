@@ -104,12 +104,61 @@ const getFilm = ({ filmId }) => {
           id: filmId,
         },
         raw: true,
+        nest: true,
+        include: [
+          {
+            model: db.ShowTime,
+            as: "filmShowTime",
+            attributes: {
+              exclude: ["id", "filmId", "createdAt", "updatedAt"],
+            },
+            include: [
+              {
+                model: db.Room,
+                as: "roomShowTime",
+                attributes: {
+                  exclude: ["id", "createdAt", "updatedAt"],
+                },
+              },
+            ],
+          },
+        ],
       });
 
       if (!data) {
         resolve({
           errCode: 2,
           errMessage: `Không tìm thấy bộ phim có id = ${filmId} `,
+        });
+      }
+
+      resolve({
+        errCode: 0,
+        errMessage: "Ok",
+        data: [data],
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const getAllFilmPlaying = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await db.Film.findAll({
+        where: {
+          startDate: {
+            [Op.lte]: new Date(),
+          },
+        },
+        raw: true,
+      });
+
+      if (!data) {
+        resolve({
+          errCode: 2,
+          errMessage: `Không tìm thấy kết quả `,
         });
       }
 
@@ -124,10 +173,15 @@ const getFilm = ({ filmId }) => {
   });
 };
 
-const getAllFilm = () => {
+const getAllFilmUpComing = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const data = await db.Film.findAll({
+        where: {
+          startDate: {
+            [Op.gt]: new Date(),
+          },
+        },
         raw: true,
       });
 
@@ -289,12 +343,12 @@ const filmBrowse = (id, req) => {
 const createFilm = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      if (new Date(data.startDate) <= new Date()) {
-        return resolve({
-          errCode: 2,
-          errMessage: "Ngày bắt đầu bộ phim phải là ngày trong tương lai",
-        });
-      }
+      // if (new Date(data.startDate) <= new Date()) {
+      //   return resolve({
+      //     errCode: 2,
+      //     errMessage: "Ngày bắt đầu bộ phim phải là ngày trong tương lai",
+      //   });
+      // }
 
       const film = await db.Film.create({
         id: uuidv4(),
@@ -596,7 +650,8 @@ const getDataStatisticalParReq = ({ year = new Date().getFullYear() - 1 }) => {
 
 module.exports = {
   getFilm,
-  getAllFilm,
+  getAllFilmPlaying,
+  getAllFilmUpComing,
   getFilmReg,
   getFilmAndCountRequest,
   filmBrowse,
