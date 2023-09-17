@@ -31,5 +31,6 @@ router.get(
   "/v1/statistical/user-par-req",
   apiController.handleStatisticalParReq
 );
+router.get("/v1/film/total-ticket", apiController.handleTotalTicket);
 
 module.exports = router;

@@ -282,6 +282,41 @@ const getFilmAndCountRequest = ({ filmId }) => {
   });
 };
 
+const totalTicket = ({ filmId }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await db.ListUser.findAll({
+        where: {
+          filmId,
+        },
+        attributes: {
+          include: [
+            [Sequelize.fn("SUM", Sequelize.col("ticket")), "totalTicket"],
+          ],
+        },
+        raw: true,
+        nest: true,
+        // separate: true,
+      });
+
+      if (data) {
+        resolve({
+          errCode: 0,
+          errMessage: "",
+          data: data,
+        });
+      }
+
+      resolve({
+        errCode: 1,
+        errMessage: "Lỗi apiService tại backend",
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 const filmBrowse = (id, req) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -431,13 +466,13 @@ const registerFilm = (filmId, userId, ticket) => {
         if (!ticket) {
           resolve({
             errCode: 3,
-            errMessage: "Bạn đã đăng ký bộ phim này rồi!",
+            errMessage: "Bạn đã đặt vé cho bộ phim này rồi!",
           });
         } else {
           await exitsRegister.update({ ticket: ticket });
           resolve({
             errCode: 0,
-            errMessage: `Bạn đã đăng ký bộ phim này trước đó và cập nhật giá vé thành ${ticket}`,
+            errMessage: `Bạn đã đặt vé cho bộ phim này trước đó và cập nhật số vé thành ${ticket}`,
           });
         }
       } else {
@@ -450,12 +485,12 @@ const registerFilm = (filmId, userId, ticket) => {
         if (addList) {
           resolve({
             errCode: 0,
-            errMessage: "Đăng ký thành công.",
+            errMessage: "Đặt vé thành công.",
           });
         }
         resolve({
           errCode: 2,
-          errMessage: "Đăng ký thất bại, lỗi server!.",
+          errMessage: "Đặt vé thất bại, lỗi server!.",
         });
       }
     } catch (error) {
@@ -660,4 +695,5 @@ module.exports = {
   deleteUserOfListUser,
   getFilmOfUserRegistered,
   getDataStatisticalParReq,
+  totalTicket,
 };

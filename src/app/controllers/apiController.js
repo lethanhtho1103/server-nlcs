@@ -243,6 +243,13 @@ class apiController {
     res.status(200).json(data);
   }
 
+  //[GET] /api/v1/film/total-ticket
+  async handleTotalTicket(req, res) {
+    const filmId = req.query.filmId;
+    const data = await apiFilmService.totalTicket({ filmId });
+    res.status(200).json(data);
+  }
+
   // [GET] /api/v1/statistical/user-par-req
   async handleStatisticalParReq(req, res) {
     const year = req.query.year;
