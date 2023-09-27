@@ -143,7 +143,7 @@ const getFilm = ({ filmId }) => {
   });
 };
 
-const getAllFilmPlaying = () => {
+const getAllFilmPlaying = (limit = 5) => {
   return new Promise(async (resolve, reject) => {
     try {
       const data = await db.Film.findAll({
@@ -152,6 +152,7 @@ const getAllFilmPlaying = () => {
             [Op.lte]: new Date(),
           },
         },
+        limit: limit,
         raw: true,
       });
 
@@ -173,7 +174,7 @@ const getAllFilmPlaying = () => {
   });
 };
 
-const getAllFilmUpComing = () => {
+const getAllFilmUpComing = (limit = 5) => {
   return new Promise(async (resolve, reject) => {
     try {
       const data = await db.Film.findAll({
@@ -183,6 +184,7 @@ const getAllFilmUpComing = () => {
           },
         },
         raw: true,
+        limit: limit,
       });
 
       if (!data) {
@@ -683,6 +685,36 @@ const getDataStatisticalParReq = ({ year = new Date().getFullYear() - 1 }) => {
   });
 };
 
+const searchFilms = ({ name }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await db.Film.findAll({
+        where: {
+          name: {
+            [Op.like]: `%${name}%`,
+          },
+        },
+        raw: true,
+        nest: true,
+      });
+
+      if (!data) {
+        resolve({
+          errCode: 2,
+          errMessage: `Không tìm thấy bộ phim có tên= ${name} `,
+        });
+      }
+      resolve({
+        errCode: 0,
+        errMessage: "Ok",
+        data: data,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getFilm,
   getAllFilmPlaying,
@@ -696,4 +728,5 @@ module.exports = {
   getFilmOfUserRegistered,
   getDataStatisticalParReq,
   totalTicket,
+  searchFilms,
 };

@@ -256,6 +256,13 @@ class apiController {
     const response = await apiFilmService.getDataStatisticalParReq({ year });
     res.status(200).json(response);
   }
+
+  //[GET] /api/v1/film/search-films
+  async handleSearchFilms(req, res) {
+    const name = req.query.name;
+    const response = await apiFilmService.searchFilms({ name });
+    return res.status(200).json(response);
+  }
 }
 
 module.exports = new apiController();
