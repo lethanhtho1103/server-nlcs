@@ -143,7 +143,7 @@ const getFilm = ({ filmId }) => {
   });
 };
 
-const getAllFilmPlaying = (limit = 5) => {
+const getAllFilmPlaying = (limit) => {
   return new Promise(async (resolve, reject) => {
     try {
       const data = await db.Film.findAll({

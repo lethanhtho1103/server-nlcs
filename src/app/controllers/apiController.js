@@ -1,6 +1,7 @@
 const apiUserService = require("../../services/apiUserService");
 const apiPostService = require("../../services/apiPostService");
 const apiFilmService = require("../../services/apiFilmService");
+const { NUMBER } = require("sequelize");
 const cloudinary = require("cloudinary").v2;
 
 class apiController {
@@ -155,6 +156,11 @@ class apiController {
 
   //[GET] /api/v1/film/get-all-playing
   async handleGetAllFilmPlaying(req, res) {
+    const limit = req.query.limit;
+    if (parseInt(limit)) {
+      const response = await apiFilmService.getAllFilmPlaying(parseInt(limit));
+      return res.status(200).json(response);
+    }
     const response = await apiFilmService.getAllFilmPlaying();
     return res.status(200).json(response);
   }
