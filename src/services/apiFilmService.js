@@ -715,6 +715,81 @@ const searchFilms = ({ name }) => {
   });
 };
 
+const updateComment = async ({ userId, filmId, comment, rate }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const userFilm = await db.ListUser.findOne({
+        where: {
+          userId: userId,
+          filmId: filmId,
+        },
+      });
+
+      if (!userFilm) {
+        return resolve({
+          errCode: 1,
+          errMesagge: `Bạn chưa đăng ký bộ phim này = ${id}`,
+        });
+      }
+      await userFilm.update({ comment, rate });
+      resolve({
+        errCode: 0,
+        errMessage: userFilm,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const getAllCommentOfFilm = ({ filmId }) => {
+  if (!filmId) {
+    return {
+      errCode: 1,
+      errMessage: "Không có filmId",
+    };
+  }
+  return new Promise(async (resolve, reject) => {
+    try {
+      const listFilm = await db.ListUser.findAll({
+        where: {
+          filmId: filmId,
+        },
+        raw: true,
+        nest: true,
+        // attributes: [Sequelize.fn("AVG", Sequelize.col("rate")), "rate"],
+        attributes: {
+          exclude: ["userId", "filmId"],
+        },
+        separate: true,
+        include: [
+          {
+            model: db.User,
+            as: "userFilm",
+            attributes: {
+              exclude: ["password", "type", "createdAt", "updatedAt"],
+            },
+          },
+        ],
+      });
+      if (!listFilm) {
+        resolve({
+          errCode: 2,
+          errMessage: "Không tìm thấy kết quả",
+        });
+      }
+      resolve({
+        errCode: 0,
+        errMessage: "Thành công!",
+        // data: listFilm.map((film) => film.filmId),
+        data: listFilm,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getFilm,
   getAllFilmPlaying,
@@ -729,4 +804,6 @@ module.exports = {
   getDataStatisticalParReq,
   totalTicket,
   searchFilms,
+  updateComment,
+  getAllCommentOfFilm,
 };

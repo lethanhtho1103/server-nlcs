@@ -269,6 +269,29 @@ class apiController {
     const response = await apiFilmService.searchFilms({ name });
     return res.status(200).json(response);
   }
+
+  //[PATCH] /api/v1/user-comment
+  async handleUserComment(req, res, next) {
+    const { comment, rate } = req.body;
+    const data = { comment, rate };
+    const userId = req.query.userId;
+    const filmId = req.query.filmId;
+
+    const response = await apiFilmService.updateComment({
+      userId: userId,
+      filmId: filmId,
+      ...data,
+    });
+    res.status(200).json(response);
+  }
+
+  //[GET] /api/v1/film/get-all-comments
+  async handleGetAllComments(req, res) {
+    const response = await apiFilmService.getAllCommentOfFilm({
+      filmId: req.query.filmId,
+    });
+    res.status(200).send(response);
+  }
 }
 
 module.exports = new apiController();

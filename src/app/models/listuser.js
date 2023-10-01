@@ -26,6 +26,8 @@ module.exports = (sequelize, DataTypes) => {
       filmId: DataTypes.STRING,
       status: DataTypes.STRING,
       ticket: DataTypes.INTEGER,
+      comment: DataTypes.STRING,
+      rate: DataTypes.INTEGER,
     },
     {
       sequelize,

@@ -34,4 +34,7 @@ router.get(
 router.get("/v1/film/total-ticket", apiController.handleTotalTicket);
 router.get("/v1/film/search-films", apiController.handleSearchFilms);
 
+router.patch("/v1/user-comment", apiController.handleUserComment);
+router.get("/v1/film/get-all-comments", apiController.handleGetAllComments);
+
 module.exports = router;

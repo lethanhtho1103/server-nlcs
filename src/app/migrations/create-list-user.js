@@ -25,6 +25,12 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: "0",
       },
+      comment: {
+        type: Sequelize.STRING,
+      },
+      rate: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
