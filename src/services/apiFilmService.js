@@ -143,7 +143,7 @@ const getFilm = ({ filmId }) => {
   });
 };
 
-const getAllFilmPlaying = (limit) => {
+const getAllFilmPlaying = (limit, offset) => {
   return new Promise(async (resolve, reject) => {
     try {
       const data = await db.Film.findAll({
@@ -154,6 +154,8 @@ const getAllFilmPlaying = (limit) => {
         },
         limit: limit,
         raw: true,
+        order: [["startDate", "ASC"]],
+        offset: offset,
       });
 
       if (!data) {
@@ -487,7 +489,7 @@ const registerFilm = (filmId, userId, ticket) => {
         if (addList) {
           resolve({
             errCode: 0,
-            errMessage: "Đặt vé thành công.",
+            errMessage: "Thanh toán thành công! Vào giỏ hàng để xem vé.",
           });
         }
         resolve({
@@ -758,9 +760,6 @@ const getAllCommentOfFilm = ({ filmId }) => {
         raw: true,
         nest: true,
         // attributes: [Sequelize.fn("AVG", Sequelize.col("rate")), "rate"],
-        attributes: {
-          exclude: ["userId", "filmId"],
-        },
         separate: true,
         include: [
           {
@@ -790,6 +789,44 @@ const getAllCommentOfFilm = ({ filmId }) => {
   });
 };
 
+const getStartTimeFilm = ({ filmId, startDate }) => {
+  if (!startDate) {
+    return {
+      errCode: 1,
+      errMessage: "Chưa có ngày chiếu",
+    };
+  }
+  return new Promise(async (resolve, reject) => {
+    try {
+      const listTime = await db.ShowTime.findAll({
+        where: {
+          filmId: filmId,
+          startDate: startDate,
+        },
+        raw: true,
+        nest: true,
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+        order: [["startTime", "ASC"]],
+      });
+      if (!listTime) {
+        resolve({
+          errCode: 2,
+          errMessage: "Không tìm thấy kết quả",
+        });
+      }
+      resolve({
+        errCode: 0,
+        errMessage: "Thành công!",
+        data: listTime,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getFilm,
   getAllFilmPlaying,
@@ -806,4 +843,5 @@ module.exports = {
   searchFilms,
   updateComment,
   getAllCommentOfFilm,
+  getStartTimeFilm,
 };

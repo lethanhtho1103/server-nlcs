@@ -36,5 +36,6 @@ router.get("/v1/film/search-films", apiController.handleSearchFilms);
 
 router.patch("/v1/user-comment", apiController.handleUserComment);
 router.get("/v1/film/get-all-comments", apiController.handleGetAllComments);
+router.get("/v1/film/get-all-start-time", apiController.handleGetAllStartTime);
 
 module.exports = router;

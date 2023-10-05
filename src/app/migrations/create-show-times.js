@@ -11,14 +11,26 @@ module.exports = {
       },
       filmId: {
         allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING,
       },
       roomId: {
         allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING,
+      },
+      startDate: {
+        allowNull: false,
+        primaryKey: true,
+        type: Sequelize.DATE,
       },
       startTime: {
         allowNull: false,
+        primaryKey: true,
+        type: Sequelize.STRING,
+      },
+      currUser: {
+        allowNull: true,
         type: Sequelize.STRING,
       },
       createdAt: {

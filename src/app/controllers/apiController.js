@@ -157,11 +157,15 @@ class apiController {
   //[GET] /api/v1/film/get-all-playing
   async handleGetAllFilmPlaying(req, res) {
     const limit = req.query.limit;
-    if (parseInt(limit)) {
-      const response = await apiFilmService.getAllFilmPlaying(parseInt(limit));
+    const offset = req.query.offset;
+    if (parseInt(limit) && parseInt(offset)) {
+      const response = await apiFilmService.getAllFilmPlaying(
+        parseInt(limit),
+        parseInt(offset)
+      );
       return res.status(200).json(response);
     }
-    const response = await apiFilmService.getAllFilmPlaying();
+    const response = await apiFilmService.getAllFilmPlaying(parseInt(limit));
     return res.status(200).json(response);
   }
 
@@ -289,6 +293,15 @@ class apiController {
   async handleGetAllComments(req, res) {
     const response = await apiFilmService.getAllCommentOfFilm({
       filmId: req.query.filmId,
+    });
+    res.status(200).send(response);
+  }
+
+  //[GET] /api/v1/film/get-all-start-time
+  async handleGetAllStartTime(req, res) {
+    const response = await apiFilmService.getStartTimeFilm({
+      filmId: req.query.filmId,
+      startDate: req.query.startDate,
     });
     res.status(200).send(response);
   }

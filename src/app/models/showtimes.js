@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       roomId: DataTypes.STRING,
       filmId: DataTypes.STRING,
+      startDate: DataTypes.DATE,
       startTime: DataTypes.STRING,
     },
     {
