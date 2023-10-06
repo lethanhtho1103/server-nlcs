@@ -790,12 +790,6 @@ const getAllCommentOfFilm = ({ filmId }) => {
 };
 
 const getStartTimeFilm = ({ filmId, startDate }) => {
-  if (!startDate) {
-    return {
-      errCode: 1,
-      errMessage: "Chưa có ngày chiếu",
-    };
-  }
   return new Promise(async (resolve, reject) => {
     try {
       const listTime = await db.ShowTime.findAll({
