@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       startDate: DataTypes.DATE,
       totalTime: DataTypes.INTEGER,
       ageAllowed: DataTypes.INTEGER,
-      evaluate: DataTypes.FLOAT,
+      trailer: DataTypes.STRING,
       content: DataTypes.TEXT,
     },
     {

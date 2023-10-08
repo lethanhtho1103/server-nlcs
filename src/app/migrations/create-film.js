@@ -59,8 +59,8 @@ module.exports = {
       ageAllowed: {
         type: Sequelize.INTEGER,
       },
-      evaluate: {
-        type: Sequelize.FLOAT,
+      trailer: {
+        type: Sequelize.STRING,
       },
       content: {
         type: Sequelize.TEXT,

@@ -401,7 +401,7 @@ const createFilm = (data) => {
         ageAllowed: data.ageAllowed,
         content: data.content ? data.content : null,
         title: data.title,
-        evaluate: data.evaluate,
+        trailer: data.trailer,
       });
 
       if (film) {
@@ -821,6 +821,30 @@ const getStartTimeFilm = ({ filmId, startDate }) => {
   });
 };
 
+const getAllComboCornWater = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const listCombo = await db.CornWater.findAll({
+        raw: true,
+        nest: true,
+      });
+      if (!listCombo) {
+        resolve({
+          errCode: 2,
+          errMessage: "Không tìm thấy kết quả",
+        });
+      }
+      resolve({
+        errCode: 0,
+        errMessage: "Thành công!",
+        data: listCombo,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getFilm,
   getAllFilmPlaying,
@@ -838,4 +862,5 @@ module.exports = {
   updateComment,
   getAllCommentOfFilm,
   getStartTimeFilm,
+  getAllComboCornWater,
 };

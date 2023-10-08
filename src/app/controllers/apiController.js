@@ -103,7 +103,7 @@ class apiController {
       ageAllowed,
       content,
       title,
-      evaluate,
+      trailer,
     } = req.body;
 
     if (
@@ -117,7 +117,7 @@ class apiController {
       !ageAllowed ||
       !content ||
       !title ||
-      !evaluate
+      !trailer
     ) {
       return res.status(200).json({
         errCode: 1,
@@ -136,7 +136,7 @@ class apiController {
       ageAllowed,
       content,
       title,
-      evaluate,
+      trailer,
     });
     return res.status(200).json(response);
   }
@@ -294,7 +294,7 @@ class apiController {
     const response = await apiFilmService.getAllCommentOfFilm({
       filmId: req.query.filmId,
     });
-    res.status(200).send(response);
+    res.status(200).json(response);
   }
 
   //[GET] /api/v1/film/get-all-start-time
@@ -303,7 +303,13 @@ class apiController {
       filmId: req.query.filmId,
       startDate: req.query.startDate,
     });
-    res.status(200).send(response);
+    res.status(200).json(response);
+  }
+
+  //[GET] /api/v1/film/get-all-combo
+  async handleGetAllCombo(req, res) {
+    const response = await apiFilmService.getAllComboCornWater();
+    res.status(200).json(response);
   }
 }
 

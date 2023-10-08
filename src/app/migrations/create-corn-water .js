@@ -2,38 +2,22 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("ListUsers", {
+    await queryInterface.createTable("CornWaters", {
       id: {
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true,
+        type: Sequelize.STRING,
+      },
+      name: {
+        type: Sequelize.STRING,
+      },
+      description: {
+        type: Sequelize.STRING,
+      },
+      price: {
         type: Sequelize.INTEGER,
       },
-      filmId: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      userId: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      cornWaterId: {
-        allowNull: false,
-        primaryKey: true,
-        type: Sequelize.STRING,
-      },
-      ticket: {
-        type: Sequelize.INTEGER,
-        defaultValue: 1,
-      },
-      status: {
-        type: Sequelize.STRING,
-        defaultValue: "0",
-      },
-      comment: {
-        type: Sequelize.STRING,
-      },
-      rate: {
+      quantity: {
         type: Sequelize.INTEGER,
       },
       createdAt: {
@@ -47,6 +31,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("ListUsers");
+    await queryInterface.dropTable("CornWaters");
   },
 };
