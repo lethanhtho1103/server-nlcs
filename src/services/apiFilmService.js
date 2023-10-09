@@ -135,7 +135,7 @@ const getFilm = ({ filmId }) => {
       resolve({
         errCode: 0,
         errMessage: "Ok",
-        data: [data],
+        data: data,
       });
     } catch (error) {
       reject(error);
@@ -402,6 +402,7 @@ const createFilm = (data) => {
         content: data.content ? data.content : null,
         title: data.title,
         trailer: data.trailer,
+        avgRate: data.avgRate,
       });
 
       if (film) {
@@ -845,6 +846,28 @@ const getAllComboCornWater = () => {
   });
 };
 
+const updateAvgRateFilm = async ({ id, avgRate }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const film = await db.Film.findByPk(id);
+      if (!film) {
+        return resolve({
+          errCode: 1,
+          errMesagge: `Bộ phim này không tồn tại`,
+        });
+      }
+      await film.update({ avgRate });
+      resolve({
+        errCode: 0,
+        errMessage: "Thành công",
+        data: film,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getFilm,
   getAllFilmPlaying,
@@ -863,4 +886,5 @@ module.exports = {
   getAllCommentOfFilm,
   getStartTimeFilm,
   getAllComboCornWater,
+  updateAvgRateFilm,
 };

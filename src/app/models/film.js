@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       ageAllowed: DataTypes.INTEGER,
       trailer: DataTypes.STRING,
       content: DataTypes.TEXT,
+      avgRate: DataTypes.FLOAT,
     },
     {
       sequelize,

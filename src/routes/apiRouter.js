@@ -42,4 +42,6 @@ router.get(
   apiController.handleGetAllCombo
 );
 
+router.patch("/v1/film/avgRate", apiController.handleUpdateAvgRateFilm);
+
 module.exports = router;

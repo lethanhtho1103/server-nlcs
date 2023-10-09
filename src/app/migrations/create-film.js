@@ -65,6 +65,9 @@ module.exports = {
       content: {
         type: Sequelize.TEXT,
       },
+      avgRate: {
+        type: Sequelize.FLOAT,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

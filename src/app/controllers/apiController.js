@@ -1,7 +1,6 @@
 const apiUserService = require("../../services/apiUserService");
 const apiPostService = require("../../services/apiPostService");
 const apiFilmService = require("../../services/apiFilmService");
-const { NUMBER } = require("sequelize");
 const cloudinary = require("cloudinary").v2;
 
 class apiController {
@@ -104,6 +103,7 @@ class apiController {
       content,
       title,
       trailer,
+      avgRate,
     } = req.body;
 
     if (
@@ -137,6 +137,7 @@ class apiController {
       content,
       title,
       trailer,
+      avgRate,
     });
     return res.status(200).json(response);
   }
@@ -309,6 +310,19 @@ class apiController {
   //[GET] /api/v1/film/get-all-combo
   async handleGetAllCombo(req, res) {
     const response = await apiFilmService.getAllComboCornWater();
+    res.status(200).json(response);
+  }
+
+  //[PATCH] /api/v1/film/avgRate
+  async handleUpdateAvgRateFilm(req, res, next) {
+    const { avgRate } = req.body;
+    const data = { avgRate };
+    const id = req.query.id;
+
+    const response = await apiFilmService.updateAvgRateFilm({
+      id: id,
+      ...data,
+    });
     res.status(200).json(response);
   }
 }
