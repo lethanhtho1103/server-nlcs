@@ -26,6 +26,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 1,
       },
+      quantityCombo: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
       status: {
         type: Sequelize.STRING,
         defaultValue: "0",

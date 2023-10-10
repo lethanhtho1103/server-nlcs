@@ -325,6 +325,21 @@ class apiController {
     });
     res.status(200).json(response);
   }
+
+  //[PATCH] /api/v1/film/buy-combo-corn-water
+  async handleBuyComboCornWater(req, res, next) {
+    const { cornWaterId, quantityCW } = req.body;
+    const data = { cornWaterId, quantityCW };
+    const userId = req.query.userId;
+    const filmId = req.query.filmId;
+
+    const response = await apiFilmService.buyComboCornWater({
+      userId: userId,
+      filmId: filmId,
+      ...data,
+    });
+    res.status(200).json(response);
+  }
 }
 
 module.exports = new apiController();

@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       cornWaterId: DataTypes.STRING,
       status: DataTypes.STRING,
       ticket: DataTypes.INTEGER,
+      quantityCombo: DataTypes.INTEGER,
       comment: DataTypes.STRING,
       rate: DataTypes.INTEGER,
     },

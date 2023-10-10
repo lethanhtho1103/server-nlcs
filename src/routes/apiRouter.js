@@ -43,5 +43,9 @@ router.get(
 );
 
 router.patch("/v1/film/avgRate", apiController.handleUpdateAvgRateFilm);
+router.patch(
+  "/v1/film/buy-combo-corn-water",
+  apiController.handleBuyComboCornWater
+);
 
 module.exports = router;

@@ -868,6 +868,39 @@ const updateAvgRateFilm = async ({ id, avgRate }) => {
   });
 };
 
+const buyComboCornWater = async ({
+  userId,
+  filmId,
+  cornWaterId,
+  quantityCW,
+}) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const userFilm = await db.ListUser.findOne({
+        where: {
+          userId: userId,
+          filmId: filmId,
+        },
+      });
+
+      if (!userFilm) {
+        return resolve({
+          errCode: 1,
+          errMessage: `Bạn chưa đăng ký bộ phim này = ${id}`,
+        });
+      }
+      await userFilm.update({ cornWaterId, quantityCW });
+      resolve({
+        errCode: 0,
+        errMessage: "Oke",
+        data: userFilm,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getFilm,
   getAllFilmPlaying,
@@ -887,4 +920,5 @@ module.exports = {
   getStartTimeFilm,
   getAllComboCornWater,
   updateAvgRateFilm,
+  buyComboCornWater,
 };
