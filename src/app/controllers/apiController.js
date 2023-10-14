@@ -155,6 +155,25 @@ class apiController {
     return res.status(200).json(response);
   }
 
+  //[GET] /api/v1/listuser/get-one-film-user-reg
+  async handleGetOneFilmReg(req, res) {
+    const filmId = req.query.filmId;
+    const userId = req.query.userId;
+
+    if (!userId && !filmId) {
+      return res.status(200).json({
+        errCode: 4,
+        errMessage: "Thiếu tham số filmId",
+      });
+    }
+
+    const response = await apiFilmService.getOneFilmReg({
+      filmId,
+      userId,
+    });
+    return res.status(200).json(response);
+  }
+
   //[GET] /api/v1/film/get-all-playing
   async handleGetAllFilmPlaying(req, res) {
     const limit = req.query.limit;

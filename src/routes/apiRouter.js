@@ -22,6 +22,10 @@ router.get(
   apiController.handleGetFilmUserRegister
 );
 router.get(
+  "/v1/listuser/get-one-film-user-reg",
+  apiController.handleGetOneFilmReg
+);
+router.get(
   "/v1/film/get-and-count-resquest",
   apiController.handleGetFilmAndCountRequest
 );

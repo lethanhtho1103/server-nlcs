@@ -143,6 +143,43 @@ const getFilm = ({ filmId }) => {
   });
 };
 
+const getOneFilmReg = ({ userId, filmId }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!filmId) {
+        resolve({
+          errCode: 1,
+          errMessage: `film trống!`,
+        });
+      }
+
+      const data = await db.ListUser.findOne({
+        where: {
+          userId: userId,
+          filmId: filmId,
+        },
+        raw: true,
+        nest: true,
+      });
+
+      if (!data) {
+        resolve({
+          errCode: 2,
+          errMessage: `Không tìm thấy bộ phim có id = ${filmId} `,
+        });
+      }
+
+      resolve({
+        errCode: 0,
+        errMessage: "Ok",
+        data: data,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 const getAllFilmPlaying = (limit, offset) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -490,7 +527,8 @@ const registerFilm = (filmId, userId, ticket) => {
         if (addList) {
           resolve({
             errCode: 0,
-            errMessage: "Thanh toán thành công! Vào giỏ hàng để xem vé.",
+            errMessage:
+              "Thanh toán thành công! Vào vé của tôi để xem vé đã đặt.",
           });
         }
         resolve({
@@ -905,6 +943,7 @@ module.exports = {
   getFilm,
   getAllFilmPlaying,
   getAllFilmUpComing,
+  getOneFilmReg,
   getFilmReg,
   getFilmAndCountRequest,
   filmBrowse,
