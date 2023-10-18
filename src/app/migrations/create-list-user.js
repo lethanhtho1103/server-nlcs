@@ -30,9 +30,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 0,
       },
-      status: {
+      startTime: {
         type: Sequelize.STRING,
-        defaultValue: "0",
+      },
+      startDate: {
+        type: Sequelize.STRING,
       },
       comment: {
         type: Sequelize.STRING,

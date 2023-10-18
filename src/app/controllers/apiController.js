@@ -210,14 +210,20 @@ class apiController {
 
   //[POST] /api/v1/film/register
   async handleRegisterFilm(req, res) {
-    const { filmId, userId, ticket } = req.body;
+    const { filmId, userId, ticket, startDate, startTime } = req.body;
     if (!filmId || !userId) {
       return res.status(404).json({
         errCode: 4,
         errMessage: "Thiếu tham số hay truyền chưa đúng!",
       });
     }
-    const response = await apiFilmService.registerFilm(filmId, userId, ticket);
+    const response = await apiFilmService.registerFilm(
+      filmId,
+      userId,
+      ticket,
+      startDate,
+      startTime
+    );
     res.status(200).json(response);
   }
 

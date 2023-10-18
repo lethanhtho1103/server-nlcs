@@ -459,7 +459,7 @@ const createFilm = (data) => {
   });
 };
 
-const registerFilm = (filmId, userId, ticket) => {
+const registerFilm = (filmId, userId, ticket, startTime, startDate) => {
   return new Promise(async (resolve, reject) => {
     // Kiểm tra xem bộ phim và người dùng có tồn tại hay không ?
     const film = db.Film.findOne({
@@ -523,6 +523,8 @@ const registerFilm = (filmId, userId, ticket) => {
           filmId: filmId,
           userId: userId,
           ticket: ticket,
+          startTime: startTime,
+          startDate: startDate,
         });
         if (addList) {
           resolve({
@@ -639,6 +641,50 @@ const getFilmOfUserRegistered = ({ userId }) => {
         where: {
           userId: userId,
         },
+        nest: true,
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+        include: [
+          {
+            model: db.Film,
+            as: "film",
+            attributes: {
+              exclude: [
+                "backgroundImage",
+                "filmId",
+                "type",
+                "origin",
+                "title",
+                "trailer",
+                "ageAllowed",
+                "content",
+                "avgRate",
+                "createdAt",
+                "updatedAt",
+                "startDate",
+                "totalTime",
+              ],
+            },
+
+            include: [
+              {
+                model: db.ShowTime,
+                as: "filmShowTime",
+                attributes: {
+                  exclude: ["id", "filmId", "createdAt", "updatedAt"],
+                },
+
+                include: [
+                  {
+                    model: db.Room,
+                    as: "roomShowTime",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       });
       if (!listFilm) {
         resolve({
@@ -649,7 +695,7 @@ const getFilmOfUserRegistered = ({ userId }) => {
       resolve({
         errCode: 0,
         errMessage: "Thành công!",
-        data: listFilm.map((film) => film.filmId),
+        data: listFilm,
       });
     } catch (error) {
       reject(error);
