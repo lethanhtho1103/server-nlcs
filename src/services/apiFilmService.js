@@ -323,12 +323,13 @@ const getFilmAndCountRequest = ({ filmId }) => {
   });
 };
 
-const totalTicket = ({ filmId }) => {
+const totalTicket = ({ filmId, startTime }) => {
   return new Promise(async (resolve, reject) => {
     try {
       const data = await db.ListUser.findAll({
         where: {
           filmId,
+          startTime,
         },
         attributes: {
           include: [
@@ -497,6 +498,7 @@ const registerFilm = (filmId, userId, ticket, startTime, startDate) => {
         where: {
           filmId,
           userId,
+          startTime,
         },
       });
 
@@ -657,13 +659,11 @@ const getFilmOfUserRegistered = ({ userId }) => {
                 "origin",
                 "title",
                 "trailer",
-                "ageAllowed",
                 "content",
                 "avgRate",
                 "createdAt",
                 "updatedAt",
                 "startDate",
-                "totalTime",
               ],
             },
 

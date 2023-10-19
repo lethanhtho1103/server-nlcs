@@ -210,7 +210,7 @@ class apiController {
 
   //[POST] /api/v1/film/register
   async handleRegisterFilm(req, res) {
-    const { filmId, userId, ticket, startDate, startTime } = req.body;
+    const { filmId, userId, ticket, startTime, startDate } = req.body;
     if (!filmId || !userId) {
       return res.status(404).json({
         errCode: 4,
@@ -221,8 +221,8 @@ class apiController {
       filmId,
       userId,
       ticket,
-      startDate,
-      startTime
+      startTime,
+      startDate
     );
     res.status(200).json(response);
   }
@@ -282,7 +282,8 @@ class apiController {
   //[GET] /api/v1/film/total-ticket
   async handleTotalTicket(req, res) {
     const filmId = req.query.filmId;
-    const data = await apiFilmService.totalTicket({ filmId });
+    const startTime = req.query.startTime;
+    const data = await apiFilmService.totalTicket({ filmId, startTime });
     res.status(200).json(data);
   }
 
