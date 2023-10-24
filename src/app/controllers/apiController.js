@@ -110,14 +110,11 @@ class apiController {
       !name ||
       !type ||
       !image ||
-      !backgroundImage ||
       !origin ||
       !startDate ||
       !totalTime ||
       !ageAllowed ||
-      !content ||
-      !title ||
-      !trailer
+      !content
     ) {
       return res.status(200).json({
         errCode: 1,
