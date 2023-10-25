@@ -13,6 +13,7 @@ router.patch("/v1/post/:id", apiController.handleUpdatePost);
 router.get("/v1/film/get-one", apiController.handleGetOneFilm);
 router.get("/v1/film/get-all-playing", apiController.handleGetAllFilmPlaying);
 router.get("/v1/film/get-all-upcoming", apiController.handleGetAllFilmUpComing);
+router.get("/v1/film/get-all-showtime", apiController.handleGetAllShowTime);
 
 router.post("/v1/film/create", apiController.handleCreateFilm);
 router.post("/v1/film/register", apiController.handleRegisterFilm);
@@ -25,10 +26,7 @@ router.get(
   "/v1/listuser/get-one-film-user-reg",
   apiController.handleGetOneFilmReg
 );
-router.get(
-  "/v1/film/get-and-count-resquest",
-  apiController.handleGetFilmAndCountRequest
-);
+router.get("/v1/film/get-all-listuser", apiController.handleGetAllListUsers);
 router.get("/v1/film-user", apiController.handleGetFilmUser);
 router.patch("/v1/film-browse", apiController.handleBrower);
 router.get(

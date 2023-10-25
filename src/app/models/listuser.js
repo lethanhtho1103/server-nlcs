@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       startTime: DataTypes.STRING,
       startDate: DataTypes.STRING,
       ticket: DataTypes.INTEGER,
+      priceTicket: DataTypes.INTEGER,
       quantityCombo: DataTypes.INTEGER,
       comment: DataTypes.STRING,
       rate: DataTypes.INTEGER,

@@ -244,78 +244,70 @@ const getAllFilmUpComing = (limit = 5) => {
   });
 };
 
-const getFilmAndCountRequest = ({ filmId }) => {
-  const conditions = {
-    where: {
-      status: 0,
-    },
-  };
-
-  const conditionFilm = {};
-  if (filmId) {
-    conditionFilm.where = {
-      id: filmId,
-    };
-  }
-
-  if (conditionFilm?.where) {
-    conditionFilm.where.startDate = { [Op.gte]: new Date() };
-  } else {
-    conditionFilm.where = {
-      startDate: { [Op.gte]: new Date() },
-    };
-  }
-
+const getAllListUsers = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const data = await db.ListUser.findAll({
-        ...conditions,
-        raw: true,
+      const listFilm = await db.ListUser.findAll({
         nest: true,
         attributes: {
-          include: [
-            [Sequelize.fn("COUNT", Sequelize.col("userFilm.id")), "filmCount"],
-          ],
-          exclude: ["userId", "filmId"],
+          exclude: ["createdAt", "updatedAt"],
         },
-        group: ["film.id"],
-        // separate: true,
         include: [
+          {
+            model: db.Film,
+            as: "film",
+            attributes: {
+              exclude: [
+                "backgroundImage",
+                "filmId",
+                "type",
+                "origin",
+                "title",
+                "trailer",
+                "content",
+                "avgRate",
+                "createdAt",
+                "updatedAt",
+                "startDate",
+              ],
+            },
+
+            include: [
+              {
+                model: db.ShowTime,
+                as: "filmShowTime",
+                attributes: {
+                  exclude: ["id", "filmId", "createdAt", "updatedAt"],
+                },
+
+                include: [
+                  {
+                    model: db.Room,
+                    as: "roomShowTime",
+                  },
+                ],
+              },
+            ],
+          },
           {
             model: db.User,
             as: "userFilm",
             attributes: {
-              exclude: ["password", "createdAt", "updatedAt"],
+              exclude: ["type", "createdAt", "updatedAt"],
             },
           },
-          {
-            model: db.Film,
-            as: "film",
-            ...conditionFilm,
-          },
-        ],
-        order: [
-          [
-            {
-              model: db.film,
-            },
-            "startDate",
-            "ASC",
-          ],
         ],
       });
-
-      if (data) {
+      if (!listFilm) {
         resolve({
-          errCode: 0,
-          errMessage: "",
-          films: data,
+          errCode: 2,
+          errMessage: "Không tìm thấy kết quả",
         });
       }
-
       resolve({
-        errCode: 1,
-        errMessage: "Lỗi apiService tại backend",
+        errCode: 0,
+        errMessage: "Thành công!",
+        data: listFilm,
       });
     } catch (error) {
       reject(error);
@@ -460,7 +452,14 @@ const createFilm = (data) => {
   });
 };
 
-const registerFilm = (filmId, userId, ticket, startTime, startDate) => {
+const registerFilm = (
+  filmId,
+  userId,
+  ticket,
+  startTime,
+  startDate,
+  priceTicket
+) => {
   return new Promise(async (resolve, reject) => {
     // Kiểm tra xem bộ phim và người dùng có tồn tại hay không ?
     const film = db.Film.findOne({
@@ -527,6 +526,7 @@ const registerFilm = (filmId, userId, ticket, startTime, startDate) => {
           ticket: ticket,
           startTime: startTime,
           startDate: startDate,
+          priceTicket: priceTicket,
         });
         if (addList) {
           resolve({
@@ -985,13 +985,39 @@ const buyComboCornWater = async ({
   });
 };
 
+const getAllShowTimes = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await db.ShowTime.findAll({
+        raw: true,
+        order: [["startDate", "DESC"]],
+      });
+
+      if (!data) {
+        resolve({
+          errCode: 2,
+          errMessage: `Không tìm thấy kết quả`,
+        });
+      }
+
+      resolve({
+        errCode: 0,
+        errMessage: "Ok",
+        data: data,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getFilm,
   getAllFilmPlaying,
   getAllFilmUpComing,
   getOneFilmReg,
   getFilmReg,
-  getFilmAndCountRequest,
+  getAllListUsers,
   filmBrowse,
   createFilm,
   registerFilm,
@@ -1006,4 +1032,5 @@ module.exports = {
   getAllComboCornWater,
   updateAvgRateFilm,
   buyComboCornWater,
+  getAllShowTimes,
 };

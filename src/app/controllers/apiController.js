@@ -192,6 +192,12 @@ class apiController {
     return res.status(200).json(response);
   }
 
+  //[GET] /api/v1/film/get-all-showtime
+  async handleGetAllShowTime(req, res) {
+    const response = await apiFilmService.getAllShowTimes();
+    return res.status(200).json(response);
+  }
+
   // [PATCH] /api/v1/film-browse
   async handleBrower(req, res) {
     const idFilm = req.body.id;
@@ -207,7 +213,8 @@ class apiController {
 
   //[POST] /api/v1/film/register
   async handleRegisterFilm(req, res) {
-    const { filmId, userId, ticket, startTime, startDate } = req.body;
+    const { filmId, userId, ticket, startTime, startDate, priceTicket } =
+      req.body;
     if (!filmId || !userId) {
       return res.status(404).json({
         errCode: 4,
@@ -219,7 +226,8 @@ class apiController {
       userId,
       ticket,
       startTime,
-      startDate
+      startDate,
+      priceTicket
     );
     res.status(200).json(response);
   }
@@ -270,9 +278,9 @@ class apiController {
     res.status(200).json(data);
   }
 
-  //[GET] /api/v1/film/get-and-count-resquest
-  async handleGetFilmAndCountRequest(req, res) {
-    const data = await apiFilmService.getFilmAndCountRequest({});
+  //[GET] /api/v1/film/get-all-listuser
+  async handleGetAllListUsers(req, res) {
+    const data = await apiFilmService.getAllListUsers();
     res.status(200).json(data);
   }
 

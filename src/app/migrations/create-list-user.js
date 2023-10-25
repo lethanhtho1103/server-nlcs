@@ -26,6 +26,9 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 1,
       },
+      priceTicket: {
+        type: Sequelize.INTEGER,
+      },
       quantityCombo: {
         type: Sequelize.INTEGER,
         defaultValue: 0,
