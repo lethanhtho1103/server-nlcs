@@ -1,6 +1,8 @@
 const apiUserService = require("../../services/apiUserService");
 const apiPostService = require("../../services/apiPostService");
 const apiFilmService = require("../../services/apiFilmService");
+const apiAdminService = require("../../services/apiAdminService");
+
 const cloudinary = require("cloudinary").v2;
 
 class apiController {
@@ -370,6 +372,12 @@ class apiController {
       ...data,
     });
     res.status(200).json(response);
+  }
+
+  //[GET] /api/v1/list-user/sum-ticket
+  async handleGetListUserAndSumTicket(req, res) {
+    const data = await apiAdminService.getListUserAndSumTicket();
+    res.status(200).json(data);
   }
 }
 

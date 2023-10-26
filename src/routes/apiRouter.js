@@ -9,12 +9,10 @@ router.post("/v1/post", apiController.handleUpPost);
 router.delete("/v1/post/delete", apiController.handelDeletePost);
 router.get("/v1/post/:id", apiController.handelGetPostById);
 router.patch("/v1/post/:id", apiController.handleUpdatePost);
-
 router.get("/v1/film/get-one", apiController.handleGetOneFilm);
 router.get("/v1/film/get-all-playing", apiController.handleGetAllFilmPlaying);
 router.get("/v1/film/get-all-upcoming", apiController.handleGetAllFilmUpComing);
 router.get("/v1/film/get-all-showtime", apiController.handleGetAllShowTime);
-
 router.post("/v1/film/create", apiController.handleCreateFilm);
 router.post("/v1/film/register", apiController.handleRegisterFilm);
 router.delete("/v1/listuser/delete", apiController.handleDeleteListUser);
@@ -35,7 +33,6 @@ router.get(
 );
 router.get("/v1/film/total-ticket", apiController.handleTotalTicket);
 router.get("/v1/film/search-films", apiController.handleSearchFilms);
-
 router.patch("/v1/user-comment", apiController.handleUserComment);
 router.get("/v1/film/get-all-comments", apiController.handleGetAllComments);
 router.get("/v1/film/get-all-start-time", apiController.handleGetAllStartTime);
@@ -43,11 +40,15 @@ router.get(
   "/v1/film/get-all-combo-corn-water",
   apiController.handleGetAllCombo
 );
-
 router.patch("/v1/film/avgRate", apiController.handleUpdateAvgRateFilm);
 router.patch(
   "/v1/film/buy-combo-corn-water",
   apiController.handleBuyComboCornWater
 );
 
+// admin
+router.get(
+  "/v1/list-user/sum-ticket",
+  apiController.handleGetListUserAndSumTicket
+);
 module.exports = router;
