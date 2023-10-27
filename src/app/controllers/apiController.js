@@ -379,6 +379,19 @@ class apiController {
     const data = await apiAdminService.getListUserAndSumTicket();
     res.status(200).json(data);
   }
+
+  //[GET] /api/v1/list-user/detail-table
+  async handleListUserDetailTable(req, res, next) {
+    const filmId = req.query.filmId;
+    const startDate = req.query.startDate;
+    const startTime = req.query.startTime;
+    const response = await apiAdminService.getListUserDetailTable({
+      filmId: filmId,
+      startTime: startTime,
+      startDate: startDate,
+    });
+    res.status(200).json(response);
+  }
 }
 
 module.exports = new apiController();

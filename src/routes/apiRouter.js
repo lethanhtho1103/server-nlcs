@@ -51,4 +51,8 @@ router.get(
   "/v1/list-user/sum-ticket",
   apiController.handleGetListUserAndSumTicket
 );
+router.get(
+  "/v1/list-user/detail-table",
+  apiController.handleListUserDetailTable
+);
 module.exports = router;
