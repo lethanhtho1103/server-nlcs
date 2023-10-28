@@ -215,8 +215,15 @@ class apiController {
 
   //[POST] /api/v1/film/register
   async handleRegisterFilm(req, res) {
-    const { filmId, userId, ticket, startTime, startDate, priceTicket } =
-      req.body;
+    const {
+      filmId,
+      userId,
+      ticket,
+      startTime,
+      startDate,
+      priceTicket,
+      roomId,
+    } = req.body;
     if (!filmId || !userId) {
       return res.status(404).json({
         errCode: 4,
@@ -229,7 +236,8 @@ class apiController {
       ticket,
       startTime,
       startDate,
-      priceTicket
+      priceTicket,
+      roomId
     );
     res.status(200).json(response);
   }

@@ -76,6 +76,15 @@ const getListUserDetailTable = ({ filmId, startTime, startDate }) => {
         attributes: {
           exclude: ["createdAt", "updatedAt"],
         },
+        include: [
+          {
+            model: db.User,
+            as: "userFilm",
+            attributes: {
+              exclude: ["password", "type", "createdAt", "updatedAt"],
+            },
+          },
+        ],
         // include: [
         //   {
         //     model: db.Film,

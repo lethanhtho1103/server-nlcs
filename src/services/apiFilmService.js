@@ -458,7 +458,8 @@ const registerFilm = (
   ticket,
   startTime,
   startDate,
-  priceTicket
+  priceTicket,
+  roomId
 ) => {
   return new Promise(async (resolve, reject) => {
     // Kiểm tra xem bộ phim và người dùng có tồn tại hay không ?
@@ -527,6 +528,7 @@ const registerFilm = (
           startTime: startTime,
           startDate: startDate,
           priceTicket: priceTicket,
+          roomId: roomId,
         });
         if (addList) {
           resolve({

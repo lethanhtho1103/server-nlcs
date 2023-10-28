@@ -17,6 +17,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      roomId: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       cornWaterId: {
         allowNull: false,
         primaryKey: true,
