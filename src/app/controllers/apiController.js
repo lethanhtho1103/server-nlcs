@@ -196,7 +196,7 @@ class apiController {
 
   //[GET] /api/v1/film/get-all-showtime
   async handleGetAllShowTime(req, res) {
-    const response = await apiFilmService.getAllShowTimes();
+    const response = await apiAdminService.getAllShowTimes();
     return res.status(200).json(response);
   }
 

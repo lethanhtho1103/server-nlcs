@@ -987,32 +987,6 @@ const buyComboCornWater = async ({
   });
 };
 
-const getAllShowTimes = () => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const data = await db.ShowTime.findAll({
-        raw: true,
-        order: [["startDate", "DESC"]],
-      });
-
-      if (!data) {
-        resolve({
-          errCode: 2,
-          errMessage: `Không tìm thấy kết quả`,
-        });
-      }
-
-      resolve({
-        errCode: 0,
-        errMessage: "Ok",
-        data: data,
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
-
 module.exports = {
   getFilm,
   getAllFilmPlaying,
@@ -1034,5 +1008,4 @@ module.exports = {
   getAllComboCornWater,
   updateAvgRateFilm,
   buyComboCornWater,
-  getAllShowTimes,
 };

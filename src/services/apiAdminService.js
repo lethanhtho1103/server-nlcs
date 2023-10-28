@@ -148,4 +148,45 @@ const getListUserDetailTable = ({ filmId, startTime, startDate }) => {
   });
 };
 
-module.exports = { getListUserAndSumTicket, getListUserDetailTable };
+const getAllShowTimes = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await db.ShowTime.findAll({
+        raw: true,
+        nest: true,
+        include: [
+          {
+            model: db.Film,
+            as: "filmShowTime",
+          },
+          {
+            model: db.Room,
+            as: "roomShowTime",
+          },
+        ],
+        order: [["startDate", "DESC"]],
+      });
+
+      if (!data) {
+        resolve({
+          errCode: 2,
+          errMessage: `Không tìm thấy kết quả`,
+        });
+      }
+
+      resolve({
+        errCode: 0,
+        errMessage: "Ok",
+        data: data,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+module.exports = {
+  getListUserAndSumTicket,
+  getListUserDetailTable,
+  getAllShowTimes,
+};
