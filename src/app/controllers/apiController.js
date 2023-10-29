@@ -400,6 +400,54 @@ class apiController {
     });
     res.status(200).json(response);
   }
+
+  //[DELETE] /api/v1/show-times/delete-one
+  async handleDeleteOneShowTime(req, res, next) {
+    const filmId = req.query.filmId;
+    const roomId = req.query.roomId;
+    const startDate = req.query.startDate;
+    const startTime = req.query.startTime;
+    const response = await apiAdminService.deleteOneShowTime({
+      filmId: filmId,
+      roomId: roomId,
+      startDate: startDate,
+      startTime: startTime,
+    });
+    res.status(200).json(response);
+  }
+
+  //[GET] /api/v1/room/get-all-room
+  async handleGetAllRoom(req, res) {
+    const data = await apiAdminService.getAllRoom();
+    res.status(200).json(data);
+  }
+
+  //[GET] /api/v1/room/get-one
+  async handelGetRoomById(req, res, next) {
+    const response = await apiAdminService.getRoomById({
+      id: req.query.id,
+    });
+    res.status(200).json(response);
+  }
+
+  //[POST] /api/v1/show-time/create
+  async handleCreateShowTime(req, res, next) {
+    const { filmId, startDate, startTime, roomId } = req.body;
+    if (!filmId || !startDate || !startTime || !roomId) {
+      return res.status(200).json({
+        errCode: 1,
+        errMessage: "Missing input",
+      });
+    }
+
+    const response = await apiAdminService.createShowTime({
+      filmId,
+      startDate,
+      startTime,
+      roomId,
+    });
+    return res.status(200).json(response);
+  }
 }
 
 module.exports = new apiController();

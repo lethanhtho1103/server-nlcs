@@ -55,4 +55,14 @@ router.get(
   "/v1/list-user/detail-table",
   apiController.handleListUserDetailTable
 );
+
+router.delete(
+  "/v1/show-times/delete-one",
+  apiController.handleDeleteOneShowTime
+);
+
+router.get("/v1/room/get-all-room", apiController.handleGetAllRoom);
+router.get("/v1/room/get-one", apiController.handelGetRoomById);
+router.post("/v1/show-time/create", apiController.handleCreateShowTime);
+
 module.exports = router;
