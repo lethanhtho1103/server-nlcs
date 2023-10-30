@@ -315,13 +315,14 @@ const getAllListUsers = () => {
   });
 };
 
-const totalTicket = ({ filmId, startTime }) => {
+const totalTicket = ({ filmId, startTime, startDate }) => {
   return new Promise(async (resolve, reject) => {
     try {
       const data = await db.ListUser.findAll({
         where: {
           filmId,
           startTime,
+          startDate,
         },
         attributes: {
           include: [
@@ -337,7 +338,7 @@ const totalTicket = ({ filmId, startTime }) => {
         resolve({
           errCode: 0,
           errMessage: "",
-          data: data,
+          data: data[0],
         });
       }
 

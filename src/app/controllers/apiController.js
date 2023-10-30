@@ -298,7 +298,12 @@ class apiController {
   async handleTotalTicket(req, res) {
     const filmId = req.query.filmId;
     const startTime = req.query.startTime;
-    const data = await apiFilmService.totalTicket({ filmId, startTime });
+    const startDate = req.query.startDate;
+    const data = await apiFilmService.totalTicket({
+      filmId,
+      startTime,
+      startDate,
+    });
     res.status(200).json(data);
   }
 

@@ -293,6 +293,33 @@ const createShowTime = (data) => {
   });
 };
 
+const updateShowTime = async ({ userId, filmId, comment, rate }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const userFilm = await db.ListUser.findOne({
+        where: {
+          userId: userId,
+          filmId: filmId,
+        },
+      });
+
+      if (!userFilm) {
+        return resolve({
+          errCode: 1,
+          errMesagge: `Bạn chưa đăng ký bộ phim này = ${id}`,
+        });
+      }
+      await userFilm.update({ comment, rate });
+      resolve({
+        errCode: 0,
+        errMessage: userFilm,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getListUserAndSumTicket,
   getListUserDetailTable,
