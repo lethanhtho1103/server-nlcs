@@ -18,24 +18,18 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
         as: "userFilm",
       });
-      ListUser.belongsTo(models.CornWater, {
-        foreignKey: "cornWaterId",
-        targetKey: "id",
-        as: "cornWater",
-      });
     }
   }
   ListUser.init(
     {
       userId: DataTypes.STRING,
       filmId: DataTypes.STRING,
-      cornWaterId: DataTypes.STRING,
       roomId: DataTypes.STRING,
       startTime: DataTypes.STRING,
       startDate: DataTypes.STRING,
       ticket: DataTypes.INTEGER,
+      seat: DataTypes.STRING,
       priceTicket: DataTypes.INTEGER,
-      quantityCombo: DataTypes.INTEGER,
       comment: DataTypes.STRING,
       rate: DataTypes.INTEGER,
     },

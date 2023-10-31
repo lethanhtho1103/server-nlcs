@@ -1,5 +1,5 @@
 const apiUserService = require("../../services/apiUserService");
-const apiPostService = require("../../services/apiPostService");
+const apiDetailComboService = require("../../services/apiDetailComboService");
 const apiFilmService = require("../../services/apiFilmService");
 const apiAdminService = require("../../services/apiAdminService");
 
@@ -28,31 +28,21 @@ class apiController {
   //[GET] /api/v1/post
   async handleGetPost(req, res, next) {
     const userId = req.query.id;
-    const posts = await apiPostService.getPost({ userId });
+    const posts = await apiDetailComboService.getPost({ userId });
     res.status(200).json(posts);
   }
 
-  //[POST] /api/v1/post
-  async handleUpPost(req, res, next) {
-    const { userId, name, description } = req.body;
-    const file = req.file ? req.file : req.body.image;
-    if (!userId || !name || !description) {
-      if (file) {
-        cloudinary.uploader.destroy(file.filename);
-      }
-      return res.status(200).json({
-        errCode: 3,
-        errMessage: "Missing parameters!!",
-      });
-    }
-    const data = { userId, name, description, file };
-    const response = await apiPostService.upPost(data);
+  //[POST] /api/v1/detail-combo/create
+  async handleCreateDetailCombo(req, res, next) {
+    const { userId, quantity, cornWaterId } = req.body;
+    const data = { userId, quantity, cornWaterId };
+    const response = await apiDetailComboService.createDetailCombo(data);
     return res.status(200).json(response);
   }
 
   //[DELETE] /api/v1/post/delete
   async handelDeletePost(req, res, next) {
-    const response = await apiPostService.deletePostById({
+    const response = await apiDetailComboService.deletePostById({
       id: req.query.id,
     });
     res.status(200).json(response);
@@ -60,7 +50,7 @@ class apiController {
 
   //[GET] /api/v1/post/:id
   async handelGetPostById(req, res, next) {
-    const response = await apiPostService.getPostById({
+    const response = await apiDetailComboService.getPostById({
       id: req.params.id,
     });
     res.status(200).json(response);
@@ -82,7 +72,7 @@ class apiController {
     }
     const data = { userId, name, description, file };
     const id = req.params.id;
-    const response = await apiPostService.updatePost({
+    const response = await apiDetailComboService.updatePost({
       id: id,
       ...data,
     });
@@ -219,6 +209,7 @@ class apiController {
       filmId,
       userId,
       ticket,
+      seat,
       startTime,
       startDate,
       priceTicket,
@@ -234,6 +225,7 @@ class apiController {
       filmId,
       userId,
       ticket,
+      seat,
       startTime,
       startDate,
       priceTicket,
@@ -421,6 +413,21 @@ class apiController {
     res.status(200).json(response);
   }
 
+  //[GET] /api/v1/show-times/get-one
+  async handleGetOneShowTime(req, res, next) {
+    const filmId = req.query.filmId;
+    const roomId = req.query.roomId;
+    const startDate = req.query.startDate;
+    const startTime = req.query.startTime;
+    const response = await apiAdminService.getOneShowTime({
+      filmId: filmId,
+      roomId: roomId,
+      startDate: startDate,
+      startTime: startTime,
+    });
+    res.status(200).json(response);
+  }
+
   //[GET] /api/v1/room/get-all-room
   async handleGetAllRoom(req, res) {
     const data = await apiAdminService.getAllRoom();
@@ -452,6 +459,24 @@ class apiController {
       roomId,
     });
     return res.status(200).json(response);
+  }
+
+  //[PATCH] /api/v1/show-time/currUser
+  async handleUpdateCurrUser(req, res, next) {
+    const { currUser } = req.body;
+    const data = { currUser };
+    const filmId = req.query.filmId;
+    const roomId = req.query.roomId;
+    const startDate = req.query.startDate;
+    const startTime = req.query.startTime;
+    const response = await apiAdminService.updateCurrUser({
+      filmId: filmId,
+      roomId: roomId,
+      startDate: startDate,
+      startTime: startTime,
+      ...data,
+    });
+    res.status(200).json(response);
   }
 }
 

@@ -8,9 +8,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      CornWater.hasMany(models.ListUser, {
+      CornWater.hasMany(models.DetailCombo, {
         foreignKey: "cornWaterId",
-        as: "cornWater",
+        as: "detailCombo",
       });
     }
   }

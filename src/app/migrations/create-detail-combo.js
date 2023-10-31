@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Posts", {
+    await queryInterface.createTable("DetailCombos", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,14 +12,13 @@ module.exports = {
       userId: {
         type: Sequelize.STRING,
       },
-      name: {
+      cornWaterId: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
-      description: {
-        type: Sequelize.TEXT,
-      },
-      image: {
-        type: Sequelize.STRING,
+      quantity: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,
@@ -32,6 +31,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Posts");
+    await queryInterface.dropTable("DetailCombos");
   },
 };

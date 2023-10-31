@@ -1,31 +1,35 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Post extends Model {
+  class DetailCombo extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Post.belongsTo(models.User, {
+      DetailCombo.belongsTo(models.User, {
         foreignKey: "userId",
         targetKey: "id",
-        as: "user",
+        as: "userCombo",
+      });
+      DetailCombo.belongsTo(models.CornWater, {
+        foreignKey: "cornWaterId",
+        targetKey: "id",
+        as: "detailCombo",
       });
     }
   }
-  Post.init(
+  DetailCombo.init(
     {
       userId: DataTypes.STRING,
-      name: DataTypes.STRING,
-      description: DataTypes.TEXT,
-      image: DataTypes.STRING,
+      cornWaterId: DataTypes.STRING,
+      quantity: DataTypes.INTEGER,
     },
     {
       sequelize,
-      modelName: "Post",
+      modelName: "DetailCombo",
     }
   );
-  return Post;
+  return DetailCombo;
 };

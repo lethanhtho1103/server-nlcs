@@ -5,7 +5,7 @@ const router = express.Router();
 router.post("/v1/login", apiController.handleLogin);
 router.post("/v1/register", apiController.handleRegister);
 router.get("/v1/post", apiController.handleGetPost);
-router.post("/v1/post", apiController.handleUpPost);
+router.post("/v1/detail-combo/create", apiController.handleCreateDetailCombo);
 router.delete("/v1/post/delete", apiController.handelDeletePost);
 router.get("/v1/post/:id", apiController.handelGetPostById);
 router.patch("/v1/post/:id", apiController.handleUpdatePost);
@@ -61,6 +61,8 @@ router.delete(
   apiController.handleDeleteOneShowTime
 );
 
+router.get("/v1/show-time/get-one", apiController.handleGetOneShowTime);
+router.patch("/v1/show-time/currUser", apiController.handleUpdateCurrUser);
 router.get("/v1/room/get-all-room", apiController.handleGetAllRoom);
 router.get("/v1/room/get-one", apiController.handelGetRoomById);
 router.post("/v1/show-time/create", apiController.handleCreateShowTime);

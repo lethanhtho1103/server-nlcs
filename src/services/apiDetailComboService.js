@@ -44,42 +44,26 @@ const getPost = ({ userId, limit = 8 }) => {
   });
 };
 
-const upPost = (data) => {
+const createDetailCombo = (data) => {
   return new Promise(async (resolve, reject) => {
-    const isHaveUser = await checkUserData(data.userId);
-    let image;
-    if (data.file && data.file?.path) {
-      image = data.file.path;
-    } else {
-      image = data.file;
-    }
-
-    if (!isHaveUser) {
-      resolve({
-        errCode: 1,
-        errMesagge: `Không có người dùng ${data.userId} trong hệ thống!`,
-      });
-    }
-
     try {
-      const newPost = await db.Post.create({
+      const newDetailCombo = await db.DetailCombo.create({
         userId: data.userId,
-        name: data.name,
-        description: data.description,
-        image: image ? image : "",
+        quantity: data.quantity,
+        cornWaterId: data.cornWaterId,
       });
 
-      if (newPost) {
+      if (newDetailCombo) {
         resolve({
           errCode: 0,
-          errMesagge: "",
-          data: newPost,
+          errMessage: "Mua bắp nước thành công",
+          data: newDetailCombo,
         });
       }
 
       resolve({
         errCode: 2,
-        errMesagge: "Thất bại",
+        errMessage: "Thất bại",
       });
     } catch (error) {
       reject(error);
@@ -208,4 +192,10 @@ const updatePost = async ({ id, userId, name, description, file }) => {
   });
 };
 
-module.exports = { getPost, upPost, deletePostById, getPostById, updatePost };
+module.exports = {
+  getPost,
+  createDetailCombo,
+  deletePostById,
+  getPostById,
+  updatePost,
+};

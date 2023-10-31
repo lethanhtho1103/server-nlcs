@@ -457,6 +457,7 @@ const registerFilm = (
   filmId,
   userId,
   ticket,
+  seat,
   startTime,
   startDate,
   priceTicket,
@@ -500,6 +501,7 @@ const registerFilm = (
           filmId,
           userId,
           startTime,
+          startDate,
         },
       });
 
@@ -526,6 +528,7 @@ const registerFilm = (
           filmId: filmId,
           userId: userId,
           ticket: ticket,
+          seat: seat,
           startTime: startTime,
           startDate: startDate,
           priceTicket: priceTicket,

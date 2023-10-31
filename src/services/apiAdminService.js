@@ -217,6 +217,38 @@ const deleteOneShowTime = ({ filmId, roomId, startDate, startTime }) => {
   });
 };
 
+const getOneShowTime = ({ filmId, roomId, startDate, startTime }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const showTime = await db.ShowTime.findOne({
+        where: {
+          filmId,
+          roomId,
+          startTime,
+          startDate,
+        },
+      });
+      if (!showTime) {
+        resolve({
+          errCode: 2,
+          data: filmId,
+          roomId,
+          startDate,
+          startTime,
+          errMessage: "Không tìm thấy kết quả",
+        });
+      }
+      resolve({
+        errCode: 0,
+        errMessage: "Thành công!",
+        data: showTime,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 const getAllRoom = () => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -293,26 +325,34 @@ const createShowTime = (data) => {
   });
 };
 
-const updateShowTime = async ({ userId, filmId, comment, rate }) => {
+const updateCurrUser = async ({
+  filmId,
+  roomId,
+  startDate,
+  startTime,
+  currUser,
+}) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const userFilm = await db.ListUser.findOne({
+      const showTime = await db.ShowTime.findOne({
         where: {
-          userId: userId,
           filmId: filmId,
+          roomId: roomId,
+          startDate: startDate,
+          startTime: startTime,
         },
       });
 
-      if (!userFilm) {
+      if (!showTime) {
         return resolve({
           errCode: 1,
-          errMesagge: `Bạn chưa đăng ký bộ phim này = ${id}`,
+          errMessage: `Lịch chiếu không tồn tại`,
         });
       }
-      await userFilm.update({ comment, rate });
+      await showTime.update({ currUser });
       resolve({
         errCode: 0,
-        errMessage: userFilm,
+        errMessage: showTime,
       });
     } catch (error) {
       reject(error);
@@ -328,4 +368,6 @@ module.exports = {
   getAllRoom,
   getRoomById,
   createShowTime,
+  getOneShowTime,
+  updateCurrUser,
 };

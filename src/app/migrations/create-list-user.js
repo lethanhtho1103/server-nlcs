@@ -21,22 +21,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      cornWaterId: {
-        allowNull: false,
-        primaryKey: true,
-        type: Sequelize.STRING,
-      },
       ticket: {
         type: Sequelize.INTEGER,
         defaultValue: 1,
       },
+      seat: {
+        type: Sequelize.STRING,
+      },
       priceTicket: {
         type: Sequelize.INTEGER,
       },
-      quantityCombo: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-      },
+
       startTime: {
         type: Sequelize.STRING,
       },
