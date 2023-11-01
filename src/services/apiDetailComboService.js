@@ -48,7 +48,7 @@ const createDetailCombo = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       const newDetailCombo = await db.DetailCombo.create({
-        userId: data.userId,
+        listUserId: data.listUserId,
         quantity: data.quantity,
         cornWaterId: data.cornWaterId,
       });

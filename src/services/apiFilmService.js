@@ -143,7 +143,7 @@ const getFilm = ({ filmId }) => {
   });
 };
 
-const getOneFilmReg = ({ userId, filmId }) => {
+const getOneFilmReg = ({ userId, filmId, startDate, startTime }) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (!filmId) {
@@ -157,6 +157,8 @@ const getOneFilmReg = ({ userId, filmId }) => {
         where: {
           userId: userId,
           filmId: filmId,
+          startDate: startDate,
+          startTime: startTime,
         },
         raw: true,
         nest: true,
@@ -165,7 +167,7 @@ const getOneFilmReg = ({ userId, filmId }) => {
       if (!data) {
         resolve({
           errCode: 2,
-          errMessage: `Không tìm thấy bộ phim có id = ${filmId} `,
+          errMessage: `Không tìm thấy! ${filmId}, ${userId},${startDate}, ${startTime} `,
         });
       }
 
@@ -516,10 +518,11 @@ const registerFilm = (
             errMessage: "Bạn đã đặt vé cho bộ phim này rồi!",
           });
         } else {
-          await exitsRegister.update({ ticket: ticket });
+          data = await exitsRegister.update({ ticket: ticket });
           resolve({
             errCode: 0,
             errMessage: `Bạn đã đặt vé cho bộ phim này trước đó và cập nhật số vé thành ${ticket}`,
+            data: data,
           });
         }
       } else {
@@ -539,6 +542,7 @@ const registerFilm = (
             errCode: 0,
             errMessage:
               "Thanh toán thành công! Vào vé của tôi để xem vé đã đặt.",
+            data: addList,
           });
         }
         resolve({

@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
         as: "userFilm",
       });
+      ListUser.hasMany(models.DetailCombo, {
+        foreignKey: "listUserId",
+        as: "detailListUser",
+      });
     }
   }
   ListUser.init(

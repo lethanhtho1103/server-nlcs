@@ -8,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      DetailCombo.belongsTo(models.User, {
-        foreignKey: "userId",
+      DetailCombo.belongsTo(models.ListUser, {
+        foreignKey: "listUserId",
         targetKey: "id",
-        as: "userCombo",
+        as: "detailListUser",
       });
       DetailCombo.belongsTo(models.CornWater, {
         foreignKey: "cornWaterId",
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   DetailCombo.init(
     {
-      userId: DataTypes.STRING,
+      listUserId: DataTypes.INTEGER,
       cornWaterId: DataTypes.STRING,
       quantity: DataTypes.INTEGER,
     },

@@ -34,8 +34,8 @@ class apiController {
 
   //[POST] /api/v1/detail-combo/create
   async handleCreateDetailCombo(req, res, next) {
-    const { userId, quantity, cornWaterId } = req.body;
-    const data = { userId, quantity, cornWaterId };
+    const { listUserId, quantity, cornWaterId } = req.body;
+    const data = { listUserId, quantity, cornWaterId };
     const response = await apiDetailComboService.createDetailCombo(data);
     return res.status(200).json(response);
   }
@@ -148,8 +148,9 @@ class apiController {
   async handleGetOneFilmReg(req, res) {
     const filmId = req.query.filmId;
     const userId = req.query.userId;
-
-    if (!userId && !filmId) {
+    const startDate = req.query.startDate;
+    const startTime = req.query.startTime;
+    if (!userId && !filmId && !startTime && !startDate) {
       return res.status(200).json({
         errCode: 4,
         errMessage: "Thiếu tham số filmId",
@@ -159,6 +160,8 @@ class apiController {
     const response = await apiFilmService.getOneFilmReg({
       filmId,
       userId,
+      startDate,
+      startTime,
     });
     return res.status(200).json(response);
   }
