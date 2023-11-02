@@ -25,11 +25,13 @@ class apiController {
     res.status(200).json(data);
   }
 
-  //[GET] /api/v1/post
-  async handleGetPost(req, res, next) {
-    const userId = req.query.id;
-    const posts = await apiDetailComboService.getPost({ userId });
-    res.status(200).json(posts);
+  //[GET] /api/v1/detailCombos
+  async handleGetDetailCombos(req, res, next) {
+    const listUserId = req.query.listUserId;
+    const detailCombos = await apiDetailComboService.getDetailCombo({
+      listUserId,
+    });
+    res.status(200).json(detailCombos);
   }
 
   //[POST] /api/v1/detail-combo/create
@@ -431,6 +433,18 @@ class apiController {
     res.status(200).json(response);
   }
 
+  //[GET] /api/v1/show-time/get-roomId
+  async handleGetRoomId(req, res, next) {
+    const filmId = req.query.filmId;
+    const startDate = req.query.startDate;
+    const startTime = req.query.startTime;
+    const response = await apiAdminService.getRoomId({
+      filmId: filmId,
+      startDate: startDate,
+      startTime: startTime,
+    });
+    res.status(200).json(response);
+  }
   //[GET] /api/v1/room/get-all-room
   async handleGetAllRoom(req, res) {
     const data = await apiAdminService.getAllRoom();

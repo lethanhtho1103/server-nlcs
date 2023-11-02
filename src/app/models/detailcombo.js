@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       DetailCombo.belongsTo(models.CornWater, {
         foreignKey: "cornWaterId",
         targetKey: "id",
-        as: "detailCombo",
+        as: "detailCornWater",
       });
     }
   }

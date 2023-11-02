@@ -1,41 +1,36 @@
 const db = require("../app/models");
 // const { Sequelize } = require("../app/models");
 
-const getPost = ({ userId, limit = 8 }) => {
+const getDetailCombo = ({ listUserId }) => {
   return new Promise(async (resolve, reject) => {
     try {
-      if (!userId) {
+      if (!listUserId) {
         resolve({
           errCode: 1,
-          errMessage: "id trống!",
+          errMessage: "Bạn chưa đặt bắp nước!",
         });
       }
-      const posts = await db.Post.findAll({
+      const detailCombos = await db.DetailCombo.findAll({
         where: {
-          userId,
+          listUserId,
         },
         raw: true,
         nest: true,
-        limit: limit,
-        order: [["createdAt", "DESC"]],
-        attributes: {
-          exclude: ["userId"],
-        },
         include: [
           {
-            model: db.User,
-            as: "user",
-            attributes: {
-              exclude: ["password", "createdAt", "updatedAt"],
-            },
+            model: db.CornWater,
+            as: "detailCornWater",
+            // attributes: {
+            //   exclude: ["createdAt", "updatedAt"],
+            // },
           },
         ],
       });
-      if (posts) {
+      if (detailCombos) {
         resolve({
           errCode: 0,
-          errMesagge: "",
-          posts: posts,
+          errMessage: "",
+          data: detailCombos,
         });
       }
     } catch (error) {
@@ -193,7 +188,7 @@ const updatePost = async ({ id, userId, name, description, file }) => {
 };
 
 module.exports = {
-  getPost,
+  getDetailCombo,
   createDetailCombo,
   deletePostById,
   getPostById,

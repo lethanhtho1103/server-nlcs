@@ -249,6 +249,32 @@ const getOneShowTime = ({ filmId, roomId, startDate, startTime }) => {
   });
 };
 
+const getRoomId = ({ filmId, startDate, startTime }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const showTime = await db.ShowTime.findOne({
+        where: {
+          filmId,
+          startTime,
+          startDate,
+        },
+      });
+      if (!showTime) {
+        resolve({
+          errCode: 2,
+        });
+      }
+      resolve({
+        errCode: 0,
+        errMessage: "Thành công!",
+        data: showTime,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 const getAllRoom = () => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -370,4 +396,5 @@ module.exports = {
   createShowTime,
   getOneShowTime,
   updateCurrUser,
+  getRoomId,
 };
