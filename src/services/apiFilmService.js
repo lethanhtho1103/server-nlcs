@@ -676,21 +676,14 @@ const getFilmOfUserRegistered = ({ userId }) => {
                 "startDate",
               ],
             },
-
+          },
+          {
+            model: db.DetailCombo,
+            as: "detailListUser",
             include: [
               {
-                model: db.ShowTime,
-                as: "filmShowTime",
-                attributes: {
-                  exclude: ["id", "filmId", "createdAt", "updatedAt"],
-                },
-
-                include: [
-                  {
-                    model: db.Room,
-                    as: "roomShowTime",
-                  },
-                ],
+                model: db.CornWater,
+                as: "detailCornWater",
               },
             ],
           },

@@ -495,6 +495,21 @@ class apiController {
     });
     res.status(200).json(response);
   }
+
+  //[PATCH] /api/v1/list-user/status
+  async handleUpdateStatus(req, res, next) {
+    const filmId = req.query.filmId;
+    const roomId = req.query.roomId;
+    const startDate = req.query.startDate;
+    const startTime = req.query.startTime;
+    const response = await apiAdminService.updateStatusListUsers({
+      filmId: filmId,
+      roomId: roomId,
+      startDate: startDate,
+      startTime: startTime,
+    });
+    res.status(200).json(response);
+  }
 }
 
 module.exports = new apiController();

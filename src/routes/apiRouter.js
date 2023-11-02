@@ -64,6 +64,7 @@ router.delete(
 router.get("/v1/show-time/get-one", apiController.handleGetOneShowTime);
 router.get("/v1/show-time/get-roomId", apiController.handleGetRoomId);
 router.patch("/v1/show-time/currUser", apiController.handleUpdateCurrUser);
+router.patch("/v1/list-user/status", apiController.handleUpdateStatus);
 router.get("/v1/room/get-all-room", apiController.handleGetAllRoom);
 router.get("/v1/room/get-one", apiController.handelGetRoomById);
 router.post("/v1/show-time/create", apiController.handleCreateShowTime);

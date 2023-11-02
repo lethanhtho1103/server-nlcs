@@ -227,6 +227,10 @@ const getOneShowTime = ({ filmId, roomId, startDate, startTime }) => {
           startTime,
           startDate,
         },
+        include: {
+          model: db.Room,
+          as: "roomShowTime",
+        },
       });
       if (!showTime) {
         resolve({
@@ -386,6 +390,50 @@ const updateCurrUser = async ({
   });
 };
 
+const updateStatusListUsers = async ({
+  filmId,
+  roomId,
+  startDate,
+  startTime,
+}) => {
+  return new Promise(async (resolve, reject) => {
+    if (!filmId || !roomId || !startDate || !startTime) {
+      return {
+        errCode: 2,
+        errMessage: `Thiếu tham số truyền vào`,
+      };
+    }
+    try {
+      const listUsers = await db.ListUser.findAll({
+        where: {
+          filmId: filmId,
+          roomId: roomId,
+          startDate: startDate,
+          startTime: startTime,
+        },
+        // raw: true,
+        // nest: true,
+      });
+      if (!listUsers) {
+        return resolve({
+          errCode: 1,
+          errMessage: `Không tìm thấy kết quả`,
+        });
+      }
+      await listUsers.forEach((element) => {
+        element.update({ status: 0 });
+      });
+      resolve({
+        errCode: 0,
+        errMessage: "Thành công",
+        data: listUsers,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getListUserAndSumTicket,
   getListUserDetailTable,
@@ -397,4 +445,5 @@ module.exports = {
   getOneShowTime,
   updateCurrUser,
   getRoomId,
+  updateStatusListUsers,
 };

@@ -28,6 +28,10 @@ module.exports = {
       seat: {
         type: Sequelize.STRING,
       },
+      status: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1,
+      },
       priceTicket: {
         type: Sequelize.INTEGER,
       },
