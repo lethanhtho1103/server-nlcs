@@ -152,6 +152,9 @@ const getAllShowTimes = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const data = await db.ShowTime.findAll({
+        where: {
+          status: 1,
+        },
         raw: true,
         nest: true,
         include: [
@@ -185,7 +188,47 @@ const getAllShowTimes = () => {
   });
 };
 
-const deleteOneShowTime = ({ filmId, roomId, startDate, startTime }) => {
+const getAllShowTimesCancel = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await db.ShowTime.findAll({
+        where: {
+          status: 0,
+        },
+        raw: true,
+        nest: true,
+        include: [
+          {
+            model: db.Film,
+            as: "filmShowTime",
+          },
+          {
+            model: db.Room,
+            as: "roomShowTime",
+          },
+        ],
+        order: [["startDate", "DESC"]],
+      });
+
+      if (!data) {
+        resolve({
+          errCode: 2,
+          errMessage: `Không tìm thấy kết quả`,
+        });
+      }
+
+      resolve({
+        errCode: 0,
+        errMessage: "Ok",
+        data: data,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const cancelOneShowTime = ({ filmId, roomId, startDate, startTime }) => {
   return new Promise(async (resolve, reject) => {
     try {
       const showTime = await db.ShowTime.findOne({
@@ -206,10 +249,10 @@ const deleteOneShowTime = ({ filmId, roomId, startDate, startTime }) => {
           errMessage: "Không tìm thấy kết quả",
         });
       }
-      await showTime.destroy();
+      await showTime.update({ status: 0 });
       resolve({
         errCode: 0,
-        errMessage: "Xóa bản ghi thành công!",
+        errMessage: "Hủy lịch chiếu thành công!",
       });
     } catch (error) {
       reject(error);
@@ -438,7 +481,7 @@ module.exports = {
   getListUserAndSumTicket,
   getListUserDetailTable,
   getAllShowTimes,
-  deleteOneShowTime,
+  cancelOneShowTime,
   getAllRoom,
   getRoomById,
   createShowTime,
@@ -446,4 +489,5 @@ module.exports = {
   updateCurrUser,
   getRoomId,
   updateStatusListUsers,
+  getAllShowTimesCancel,
 };

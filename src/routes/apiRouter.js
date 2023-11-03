@@ -11,8 +11,14 @@ router.get("/v1/post/:id", apiController.handelGetPostById);
 router.patch("/v1/post/:id", apiController.handleUpdatePost);
 router.get("/v1/film/get-one", apiController.handleGetOneFilm);
 router.get("/v1/film/get-all-playing", apiController.handleGetAllFilmPlaying);
+router.get("/v1/film/get-all", apiController.handleGetAllFilm);
 router.get("/v1/film/get-all-upcoming", apiController.handleGetAllFilmUpComing);
 router.get("/v1/film/get-all-showtime", apiController.handleGetAllShowTime);
+router.get(
+  "/v1/film/get-all-showtime-cancel",
+  apiController.handleGetAllShowTimeCancel
+);
+
 router.post("/v1/film/create", apiController.handleCreateFilm);
 router.post("/v1/film/register", apiController.handleRegisterFilm);
 router.delete("/v1/listuser/delete", apiController.handleDeleteListUser);
@@ -56,10 +62,7 @@ router.get(
   apiController.handleListUserDetailTable
 );
 
-router.delete(
-  "/v1/show-times/delete-one",
-  apiController.handleDeleteOneShowTime
-);
+router.patch("/v1/show-time/cancel-one", apiController.handleCancelOneShowTime);
 
 router.get("/v1/show-time/get-one", apiController.handleGetOneShowTime);
 router.get("/v1/show-time/get-roomId", apiController.handleGetRoomId);

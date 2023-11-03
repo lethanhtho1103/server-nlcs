@@ -189,9 +189,21 @@ class apiController {
     return res.status(200).json(response);
   }
 
+  //[GET] /api/v1/film/get-all
+  async handleGetAllFilm(req, res) {
+    const response = await apiFilmService.getAllFilm();
+    return res.status(200).json(response);
+  }
+
   //[GET] /api/v1/film/get-all-showtime
   async handleGetAllShowTime(req, res) {
     const response = await apiAdminService.getAllShowTimes();
+    return res.status(200).json(response);
+  }
+
+  //[GET] /api/v1/film/get-all-showtime-cancel
+  async handleGetAllShowTimeCancel(req, res) {
+    const response = await apiAdminService.getAllShowTimesCancel();
     return res.status(200).json(response);
   }
 
@@ -403,13 +415,13 @@ class apiController {
     res.status(200).json(response);
   }
 
-  //[DELETE] /api/v1/show-times/delete-one
-  async handleDeleteOneShowTime(req, res, next) {
+  //[PATCH] /api/v1/show-time/cancel-one
+  async handleCancelOneShowTime(req, res, next) {
     const filmId = req.query.filmId;
     const roomId = req.query.roomId;
     const startDate = req.query.startDate;
     const startTime = req.query.startTime;
-    const response = await apiAdminService.deleteOneShowTime({
+    const response = await apiAdminService.cancelOneShowTime({
       filmId: filmId,
       roomId: roomId,
       startDate: startDate,

@@ -215,6 +215,33 @@ const getAllFilmPlaying = (limit, offset) => {
   });
 };
 
+const getAllFilm = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await db.Film.findAll({
+        raw: true,
+        nest: true,
+        order: [["createdAt", "ASC"]],
+      });
+
+      if (!data) {
+        resolve({
+          errCode: 2,
+          errMessage: `Không tìm thấy kết quả `,
+        });
+      }
+
+      resolve({
+        errCode: 0,
+        errMessage: "Ok",
+        data: data,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 const getAllFilmUpComing = (limit = 5) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -992,6 +1019,7 @@ module.exports = {
   getFilm,
   getAllFilmPlaying,
   getAllFilmUpComing,
+  getAllFilm,
   getOneFilmReg,
   getFilmReg,
   getAllListUsers,
