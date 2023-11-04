@@ -84,6 +84,16 @@ const getListUserDetailTable = ({ filmId, startTime, startDate }) => {
               exclude: ["password", "type", "createdAt", "updatedAt"],
             },
           },
+          {
+            model: db.DetailCombo,
+            as: "detailListUser",
+            include: [
+              {
+                model: db.CornWater,
+                as: "detailCornWater",
+              },
+            ],
+          },
         ],
         // include: [
         //   {
