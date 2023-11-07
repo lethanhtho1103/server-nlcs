@@ -77,4 +77,9 @@ router.get("/v1/room/get-all-room", apiController.handleGetAllRoom);
 router.get("/v1/room/get-one", apiController.handelGetRoomById);
 router.post("/v1/show-time/create", apiController.handleCreateShowTime);
 
+router.get(
+  "/v1/statistical/user-par-req",
+  apiController.handleStatisticalParReq
+);
+
 module.exports = router;

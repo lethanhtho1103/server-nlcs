@@ -714,6 +714,10 @@ const getFilmOfUserRegistered = ({ userId }) => {
               },
             ],
           },
+          {
+            model: db.User,
+            as: "userFilm",
+          },
         ],
       });
       if (!listFilm) {
@@ -733,67 +737,126 @@ const getFilmOfUserRegistered = ({ userId }) => {
   });
 };
 
+// const getDataStatisticalParReq = ({ year = new Date().getFullYear() - 1 }) => {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       const listFilmPar = await db.ListUser.findAll({
+//         where: {
+//           status: 1,
+//         },
+//         raw: true,
+//         nest: true,
+//         attributes: [
+//           [Sequelize.fn("MONTH", Sequelize.col("startDate")), "month"],
+//           [Sequelize.fn("COUNT", "*"), "count"],
+//         ],
+//         include: [
+//           {
+//             model: db.Film,
+//             as: "film",
+//             where: {
+//               startDate: Sequelize.literal(`YEAR(startDate) = ${year}`),
+//             },
+//           },
+//         ],
+//         group: [Sequelize.fn("MONTH", Sequelize.col("startDate"))],
+//       });
+
+//       let dataPar = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+//       listFilmPar.forEach((month) => {
+//         dataPar[month - month - 1] = month.count;
+//       });
+
+//       // const listFilmReq = await db.ListUser.findAll({
+//       //   raw: true,
+//       //   nest: true,
+//       //   attributes: [
+//       //     [Sequelize.fn("MONTH", Sequelize.col("startDate")), "month"],
+//       //     [Sequelize.fn("COUNT", "*"), "count"],
+//       //   ],
+//       //   where: {
+//       //     status: 1,
+//       //   },
+//       //   include: [
+//       //     {
+//       //       model: db.Film,
+//       //       as: "film",
+//       //       where: {
+//       //         startDate: Sequelize.literal(`YEAR(startDate) = ${year}`),
+//       //       },
+//       //     },
+//       //   ],
+//       //   group: [Sequelize.fn("MONTH", Sequelize.col("startDate"))],
+//       // });
+
+//       // let dataReq = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+//       // listFilmReq.forEach((month) => {
+//       //   dataReq[month.month - 1] = month.count;
+//       // });
+
+//       return resolve({
+//         errCode: 0,
+//         errMessage: "Success!",
+//         data: {
+//           Par: dataPar,
+//           // Req: dataReq,
+//         },
+//       });
+//     } catch (error) {
+//       reject(error);
+//     }
+//   });
+// };
+
 const getDataStatisticalParReq = ({ year = new Date().getFullYear() - 1 }) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const listFilmPar = await db.ListUser.findAll({
+      const listFilmPar = await db.ShowTime.findAll({
         where: {
           status: 1,
+          startDate: Sequelize.literal(`YEAR(startDate) = ${year}`),
         },
         raw: true,
         nest: true,
         attributes: [
-          [Sequelize.fn("MONTH", Sequelize.col("startDate")), "month"],
-          [Sequelize.fn("COUNT", "*"), "count"],
+          [Sequelize.fn("MONTH", Sequelize.col("ShowTime.startDate")), "month"],
+          [Sequelize.fn("SUM", Sequelize.col("ShowTime.currUser")), "sum"],
         ],
-        include: [
-          {
-            model: db.Film,
-            as: "film",
-            where: {
-              startDate: Sequelize.literal(`YEAR(startDate) = ${year}`),
-            },
-          },
-        ],
-        group: [Sequelize.fn("MONTH", Sequelize.col("startDate"))],
-      });
-      let dataPar = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-      listFilmPar.forEach((month) => {
-        dataPar[month - month - 1] = month.count;
+
+        group: [Sequelize.fn("MONTH", Sequelize.col("ShowTime.startDate"))],
       });
 
-      const listFilmReq = await db.ListUser.findAll({
-        raw: true,
-        nest: true,
-        attributes: [
-          [Sequelize.fn("MONTH", Sequelize.col("startDate")), "month"],
-          [Sequelize.fn("COUNT", "*"), "count"],
-        ],
-        where: {
-          status: 0,
-        },
-        include: [
-          {
-            model: db.Film,
-            as: "film",
-            where: {
-              startDate: Sequelize.literal(`YEAR(startDate) = ${year}`),
-            },
-          },
-        ],
-        group: [Sequelize.fn("MONTH", Sequelize.col("startDate"))],
+      let dataPar = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      listFilmPar.forEach((month) => {
+        dataPar[month.month - 1] = month.sum;
       });
-      let dataReq = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-      listFilmReq.forEach((month) => {
-        dataReq[month.month - 1] = month.count;
-      });
+
+      // // Sửa lỗi "Column 'startDate' in field list is ambiguous" cho phần "Req"
+      // const listFilmReq = await db.ListUser.findAll({
+      //   raw: true,
+      //   nest: true,
+      //   attributes: [
+      //     [Sequelize.fn("MONTH", Sequelize.col("ListUser.startDate")), "month"],
+      //     [Sequelize.fn("COUNT", "*"), "count"],
+      //   ],
+      //   where: {
+      //     status: 1,
+      //   },
+
+      //   group: [Sequelize.fn("MONTH", Sequelize.col("ListUser.startDate"))],
+      // });
+
+      // let dataReq = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      // listFilmReq.forEach((month) => {
+      //   dataReq[month.month - 1] = month.count;
+      // });
 
       return resolve({
         errCode: 0,
         errMessage: "Success!",
         data: {
           Par: dataPar,
-          Req: dataReq,
+          // Req: dataReq,
         },
       });
     } catch (error) {
