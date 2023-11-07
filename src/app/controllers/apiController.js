@@ -103,7 +103,7 @@ class apiController {
     if (
       !name ||
       !type ||
-      !image ||
+      // !image ||
       !origin ||
       !startDate ||
       !totalTime ||
@@ -357,6 +357,15 @@ class apiController {
   async handleGetAllStartTime(req, res) {
     const response = await apiFilmService.getStartTimeFilm({
       filmId: req.query.filmId,
+      startDate: req.query.startDate,
+    });
+    res.status(200).json(response);
+  }
+
+  //[GET] /api/v1/show-time/get-all-start-time
+  async handleGetAllStartTimeFromShowTimes(req, res) {
+    const response = await apiFilmService.getAllStartTime({
+      roomId: req.query.roomId,
       startDate: req.query.startDate,
     });
     res.status(200).json(response);

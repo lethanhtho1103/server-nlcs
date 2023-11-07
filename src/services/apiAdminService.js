@@ -5,11 +5,6 @@ const getListUserAndSumTicket = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const data = await db.ListUser.findAll({
-        // where: {
-        //   filmId,
-        //   startTime,
-        //   startDate,
-        // },
         attributes: {
           include: [
             [Sequelize.fn("SUM", Sequelize.col("ticket")), "totalTicket"],
@@ -41,8 +36,70 @@ const getListUserAndSumTicket = () => {
             },
           },
         ],
-        group: ["filmId", "startTime", "startDate"],
-        order: ["filmId", "startTime", "startDate"],
+        group: ["filmId", "roomId", "startTime", "startDate"],
+        separate: false,
+        // having: Sequelize.literal("COUNT(*) > 1"),
+      });
+
+      if (data) {
+        resolve({
+          errCode: 0,
+          errMessage: "",
+          data: data,
+        });
+      }
+
+      resolve({
+        errCode: 1,
+        errMessage: "Lỗi apiService tại backend",
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const getSumComboCornWater = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await db.ListUser.findAll({
+        attributes: {
+          include: [
+            [Sequelize.fn("SUM", Sequelize.col("ticket")), "totalTicket"],
+          ],
+        },
+        // raw: true,
+        // nest: true,
+        include: [
+          {
+            model: db.Film,
+            as: "film",
+            attributes: {
+              exclude: [
+                "backgroundImage",
+                "filmId",
+                "type",
+                "origin",
+                "title",
+                "trailer",
+                "content",
+                "avgRate",
+                "createdAt",
+                "updatedAt",
+                "startDate",
+                "image",
+                "totalTime",
+                "ageAllowed",
+              ],
+            },
+          },
+          // {
+          //   model: db.DetailCombo,
+          //   as: "detailCornWater",
+          // },
+        ],
+        group: ["id", "filmId", "roomId", "startTime", "startDate"],
+        order: ["filmId", "roomId", "startTime", "startDate"],
       });
 
       if (data) {

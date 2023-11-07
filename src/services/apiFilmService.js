@@ -936,6 +936,44 @@ const getStartTimeFilm = ({ filmId, startDate }) => {
   });
 };
 
+const getAllStartTime = ({ roomId, startDate }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const listTime = await db.ShowTime.findAll({
+        where: {
+          roomId: roomId,
+          startDate: startDate,
+        },
+        raw: true,
+        nest: true,
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+        include: [
+          {
+            model: db.Film,
+            as: "filmShowTime",
+          },
+        ],
+        order: [["startTime", "ASC"]],
+      });
+      if (!listTime) {
+        resolve({
+          errCode: 2,
+          errMessage: "Không tìm thấy kết quả",
+        });
+      }
+      resolve({
+        errCode: 0,
+        errMessage: "Thành công!",
+        data: listTime,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 const getAllComboCornWater = () => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -1037,4 +1075,5 @@ module.exports = {
   getAllComboCornWater,
   updateAvgRateFilm,
   buyComboCornWater,
+  getAllStartTime,
 };

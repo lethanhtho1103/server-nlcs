@@ -43,6 +43,11 @@ router.patch("/v1/user-comment", apiController.handleUserComment);
 router.get("/v1/film/get-all-comments", apiController.handleGetAllComments);
 router.get("/v1/film/get-all-start-time", apiController.handleGetAllStartTime);
 router.get(
+  "/v1/show-time/get-all-start-time",
+  apiController.handleGetAllStartTimeFromShowTimes
+);
+
+router.get(
   "/v1/film/get-all-combo-corn-water",
   apiController.handleGetAllCombo
 );
