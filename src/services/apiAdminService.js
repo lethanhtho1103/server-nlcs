@@ -544,6 +544,110 @@ const updateStatusListUsers = async ({
   });
 };
 
+const getDataStatisticalFilm = ({
+  year = new Date().getFullYear() - 1,
+  filmId,
+}) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const listFilmPar = await db.ShowTime.findAll({
+        where: {
+          status: 1,
+          startDate: Sequelize.literal(`YEAR(startDate) = ${year}`),
+          filmId: filmId,
+        },
+        raw: true,
+        nest: true,
+        attributes: [
+          [Sequelize.fn("MONTH", Sequelize.col("ShowTime.startDate")), "month"],
+          [Sequelize.fn("SUM", Sequelize.col("ShowTime.currUser")), "sum"],
+        ],
+        include: [
+          {
+            model: db.Room,
+            as: "roomShowTime",
+            raw: true,
+            nest: true,
+          },
+        ],
+        group: [
+          Sequelize.fn("MONTH", Sequelize.col("ShowTime.startDate")),
+          "ShowTime.roomId",
+        ],
+      });
+
+      let dataPar = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      listFilmPar.forEach((month) => {
+        dataPar[month.month - 1] =
+          dataPar[month.month - 1] + month.sum * month.roomShowTime.priceTicket;
+      });
+
+      return resolve({
+        errCode: 0,
+        errMessage: "Success!",
+        data: {
+          Par: dataPar,
+        },
+        listData: listFilmPar,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const getDataStatisticalCornWater = ({
+  year = new Date().getFullYear() - 1,
+}) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const listCornWater = await db.DetailCombo.findAll({
+        where: {
+          createdAt: Sequelize.literal(`YEAR(DetailCombo.createdAt) = ${year}`),
+        },
+        raw: true,
+        nest: true,
+        attributes: [
+          [
+            Sequelize.fn("MONTH", Sequelize.col("DetailCombo.createdAt")),
+            "month",
+          ],
+          [Sequelize.fn("SUM", Sequelize.col("DetailCombo.quantity")), "sum"],
+        ],
+        include: [
+          {
+            model: db.CornWater,
+            as: "detailCornWater",
+            raw: true,
+            nest: true,
+          },
+        ],
+        group: [
+          Sequelize.fn("MONTH", Sequelize.col("DetailCombo.createdAt")),
+          "DetailCombo.cornWaterId",
+        ],
+      });
+
+      let dataPar = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      listCornWater.forEach((month) => {
+        dataPar[month.month - 1] =
+          dataPar[month.month - 1] + month.sum * month.detailCornWater.price;
+      });
+
+      return resolve({
+        errCode: 0,
+        errMessage: "Success!",
+        data: {
+          Par: dataPar,
+        },
+        listData: listCornWater,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getListUserAndSumTicket,
   getListUserDetailTable,
@@ -557,4 +661,6 @@ module.exports = {
   getRoomId,
   updateStatusListUsers,
   getAllShowTimesCancel,
+  getDataStatisticalFilm,
+  getDataStatisticalCornWater,
 };

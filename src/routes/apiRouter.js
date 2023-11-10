@@ -27,6 +27,10 @@ router.get(
   apiController.handleGetFilmUserRegister
 );
 router.get(
+  "/v1/listuser/film-user-register-cancel",
+  apiController.handleGetFilmUserRegisterCancel
+);
+router.get(
   "/v1/listuser/get-one-film-user-reg",
   apiController.handleGetOneFilmReg
 );
@@ -40,6 +44,7 @@ router.get(
 router.get("/v1/film/total-ticket", apiController.handleTotalTicket);
 router.get("/v1/film/search-films", apiController.handleSearchFilms);
 router.patch("/v1/user-comment", apiController.handleUserComment);
+router.patch("/v1/user/money-refund", apiController.handleUserMoneyRefund);
 router.get("/v1/film/get-all-comments", apiController.handleGetAllComments);
 router.get("/v1/film/get-all-start-time", apiController.handleGetAllStartTime);
 router.get(
@@ -81,5 +86,9 @@ router.get(
   "/v1/statistical/user-par-req",
   apiController.handleStatisticalParReq
 );
-
+router.get("/v1/statistical/film", apiController.handleStatisticalFilm);
+router.get(
+  "/v1/statistical/corn-water",
+  apiController.handleStatisticalCornWater
+);
 module.exports = router;

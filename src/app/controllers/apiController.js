@@ -278,6 +278,14 @@ class apiController {
     res.status(200).send(response);
   }
 
+  //[GET] /api/v1/film-user-register-cancel
+  async handleGetFilmUserRegisterCancel(req, res) {
+    const response = await apiUserService.getAllTicketUserCancel({
+      userId: req.query.userId,
+    });
+    res.status(200).send(response);
+  }
+
   // [GET] /api/v1/film-user
   // Có vấn đề chưa fix xong
   async handleGetFilmUser(req, res) {
@@ -323,6 +331,26 @@ class apiController {
     res.status(200).json(response);
   }
 
+  // [GET] /api/v1/statistical/film
+  async handleStatisticalFilm(req, res) {
+    const year = req.query.year;
+    const filmId = req.query.filmId;
+    const response = await apiAdminService.getDataStatisticalFilm({
+      year,
+      filmId,
+    });
+    res.status(200).json(response);
+  }
+
+  // [GET] /api/v1/statistical/corn-water
+  async handleStatisticalCornWater(req, res) {
+    const year = req.query.year;
+    const response = await apiAdminService.getDataStatisticalCornWater({
+      year,
+    });
+    res.status(200).json(response);
+  }
+
   //[GET] /api/v1/film/search-films
   async handleSearchFilms(req, res) {
     const name = req.query.name;
@@ -340,6 +368,18 @@ class apiController {
     const response = await apiFilmService.updateComment({
       userId: userId,
       filmId: filmId,
+      ...data,
+    });
+    res.status(200).json(response);
+  }
+
+  //[PATCH] /api/v1/user/money-refund
+  async handleUserMoneyRefund(req, res, next) {
+    const { moneyRefund } = req.body;
+    const data = { moneyRefund };
+    const id = req.query.id;
+    const response = await apiUserService.updateMoneyRefund({
+      id: id,
       ...data,
     });
     res.status(200).json(response);

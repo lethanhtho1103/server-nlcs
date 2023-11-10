@@ -974,6 +974,7 @@ const getStartTimeFilm = ({ filmId, startDate }) => {
         where: {
           filmId: filmId,
           startDate: startDate,
+          status: 1,
         },
         raw: true,
         nest: true,
@@ -1006,6 +1007,7 @@ const getAllStartTime = ({ roomId, startDate }) => {
         where: {
           roomId: roomId,
           startDate: startDate,
+          status: 1,
         },
         raw: true,
         nest: true,
