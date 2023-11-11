@@ -282,6 +282,10 @@ class apiController {
   async handleGetFilmUserRegisterCancel(req, res) {
     const response = await apiUserService.getAllTicketUserCancel({
       userId: req.query.userId,
+      filmId: req.query.filmId,
+      startTime: req.query.startTime,
+      startDate: req.query.startDate,
+      roomId: req.query.roomId,
     });
     res.status(200).send(response);
   }

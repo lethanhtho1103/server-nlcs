@@ -110,7 +110,13 @@ const authRegister = (name, id, password, confPass) => {
   });
 };
 
-const getAllTicketUserCancel = ({ userId }) => {
+const getAllTicketUserCancel = ({
+  userId,
+  filmId,
+  roomId,
+  startDate,
+  startTime,
+}) => {
   if (!userId) {
     return {
       errCode: 1,
@@ -119,9 +125,13 @@ const getAllTicketUserCancel = ({ userId }) => {
   }
   return new Promise(async (resolve, reject) => {
     try {
-      const listFilm = await db.ListUser.findAll({
+      const listFilm = await db.ListUser.findOne({
         where: {
           userId: userId,
+          filmId: filmId,
+          roomId: roomId,
+          startDate: startDate,
+          startTime: startTime,
           status: 0,
         },
         nest: true,
