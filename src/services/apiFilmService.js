@@ -545,7 +545,7 @@ const registerFilm = (
             errMessage: "Bạn đã đặt vé cho bộ phim này rồi!",
           });
         } else {
-          data = await exitsRegister.update({ ticket: ticket });
+          data = await exitsRegister.update({ ticket: ticket, seat: seat });
           resolve({
             errCode: 0,
             errMessage: `Bạn đã đặt vé cho bộ phim này trước đó và cập nhật số vé thành ${ticket}`,

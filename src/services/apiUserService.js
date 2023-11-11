@@ -199,7 +199,7 @@ const updateMoneyRefund = async ({ id, moneyRefund }) => {
       await user.update({ moneyRefund });
       resolve({
         errCode: 0,
-        errMessage: user,
+        data: user,
       });
     } catch (error) {
       reject(error);
