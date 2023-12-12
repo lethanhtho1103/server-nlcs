@@ -52,18 +52,29 @@ INSERT INTO `rooms`(`id`, `maxUser`, `priceTicket`, `createdAt`, `updatedAt`) VA
 
 
 // ShowTimes
-INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (1,'c3ce148f0f01',1,'2023-11-10','12:00',0,'[value-7]','[value-8]');
-INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (2,'c3ce148f0f02',2,'2023-11-10','13:00',0,'[value-7]','[value-8]');
-INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (3,'c3ce148f0f03',3,'2023-11-10','14:00',0,'[value-7]','[value-8]');
-INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (4,'c3ce148f0f04',4,'2023-11-10','15:00',0,'[value-7]','[value-8]');
-INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (5,'c3ce148f0f05',5,'2023-11-10','16:00',0,'[value-7]','[value-8]');
-INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (6,'c3ce148f0f06',1,'2023-11-10','17:00',0,'[value-7]','[value-8]');
-INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (7,'c3ce148f0f07',2,'2023-11-10','18:00',0,'[value-7]','[value-8]');
-INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (8,'c3ce148f0f08',3,'2023-11-10','19:30',0,'[value-7]','[value-8]');
-INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (9,'c3ce148f0f09',4,'2023-11-10','20:00',0,'[value-7]','[value-8]');
-INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (10,'c3ce148f0f10',5,'2023-11-10','21:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (1,'c3ce148f0f01',1,'2023-12-03','12:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (2,'c3ce148f0f02',2,'2023-12-03','13:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (3,'c3ce148f0f03',3,'2023-12-03','14:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (4,'c3ce148f0f04',4,'2023-12-03','15:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (5,'c3ce148f0f05',5,'2023-12-03','16:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (6,'c3ce148f0f06',1,'2023-12-03','17:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (7,'c3ce148f0f07',2,'2023-12-03','18:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (8,'c3ce148f0f08',3,'2023-12-03','19:30',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (9,'c3ce148f0f09',4,'2023-12-03','20:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (10,'c3ce148f0f10',5,'2023-12-03','21:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (1,'c3ce148f0f01',1,'2023-12-05','12:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (2,'c3ce148f0f02',2,'2023-12-05','13:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (3,'c3ce148f0f03',3,'2023-12-05','14:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (4,'c3ce148f0f04',4,'2023-12-05','15:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (5,'c3ce148f0f05',5,'2023-12-05','16:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (6,'c3ce148f0f06',1,'2023-12-05','17:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (7,'c3ce148f0f07',2,'2023-12-05','18:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (8,'c3ce148f0f08',3,'2023-12-05','19:30',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (9,'c3ce148f0f09',4,'2023-12-05','20:00',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (10,'c3ce148f0f10',5,'2023-12-05','21:00',0,'[value-7]','[value-8]');
 
-
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (4,'c3ce148f0f04',4,'2023-12-02','08:30',0,'[value-7]','[value-8]');
+INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (4,'c3ce148f0f04',5,'2023-12-02','12:30',0,'[value-7]','[value-8]');
 
 INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (11,'c3ce148f0f04',4,'2023-11-10','20:00',0,'[value-7]','[value-8]');
 INSERT INTO `showtimes`(`id`, `filmId`, `roomId`, `startDate`, `startTime`, `currUser`, `createdAt`, `updatedAt`) VALUES (12,'c3ce148f0f04',4,'2023-11-10','23:00',0,'[value-7]','[value-8]');
